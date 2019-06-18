@@ -1,0 +1,12 @@
+mat-toolbar {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  img {
+    justify-self: center;
+    align-self: center;
+    height: 2rem;
+  }
+}
+

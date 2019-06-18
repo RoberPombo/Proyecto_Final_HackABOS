@@ -1,0 +1,13 @@
+:host {
+  .grid-container {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-auto-columns: auto;
+    min-height: 100vh;
+    max-height: 100vh;
+    main {
+      overflow: auto;
+      padding: 1.5rem;
+    }
+  }
+}

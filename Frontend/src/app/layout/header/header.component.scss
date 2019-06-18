@@ -1,0 +1,12 @@
+mat-toolbar-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  div {
+    display: flex;
+    align-items: center;
+    i {
+      padding-right: 0.5rem;
+    }
+  }
+}

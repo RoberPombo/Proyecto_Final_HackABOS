@@ -1,0 +1,39 @@
+<section id="wallpaper">
+</section>
+
+
+<section id="forms">
+  <header class="head-container">
+    <img src="./assets/img/logo.png" alt="Logo Sport Scout App">
+    <section>
+      <h1>{{ 'auth.title' | translate }}</h1>
+      <p>{{ 'auth.subtitle1' | translate }}</p>
+      <p>{{ 'auth.subtitle2' | translate }}</p>
+    </section>
+  </header>
+
+
+  <section class="button-container">
+    <button mat-raised-button id="login" [ngClass]="loginClass" color="primary" (click)="changeContainer(true)">
+      {{ 'auth.login' | translate }}
+    </button>
+    <button mat-raised-button id="register" [ngClass]="registerClass" color="primary" (click)="changeContainer(false)">
+      {{ 'auth.register' | translate }}
+    </button>
+  </section>
+
+
+  <ul class="form-container">
+    <li id="login-container" [ngClass]="liClass">
+
+      <app-login></app-login>
+
+    </li>
+
+    <li id="register-container">
+
+      <app-register></app-register>
+
+    </li>
+  </ul>
+</section>

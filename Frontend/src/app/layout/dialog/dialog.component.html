@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>{{ data.title | translate }}</h1>
+
+<div mat-dialog-content>
+  <p>{{ data.message | translate}}</p>
+  <p *ngIf="data.note"><small>{{ data.note | translate }}</small></p>
+  <form [formGroup]="form" #formDirective="ngForm" (ngSubmit)="confirm()" *ngIf="data.formFields.length > 0">
+
+    <mat-form-field class="group" *ngIf="data.formFields.indexOf('email') !== -1">
+      <input matInput placeholder="{{ 'auth.form_email' | translate }}" type="text" name="form-email"
+        class="form-control" formControlName="email">
+      <mat-error *ngIf="form.get('email').hasError('emailNoPattern') && !form.get('email').hasError('required')">
+        {{ 'auth.form_error_email_patern' | translate }}
+      </mat-error>
+      <mat-error *ngIf="form.get('email').hasError('required')">
+        {{ 'auth.form_error_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="group" *ngIf="data.formFields.indexOf('password') !== -1">
+      <input matInput placeholder="{{ 'auth.form_password' | translate }}" type="password" name="form-password"
+        class="form-control" formControlName="password">
+      <mat-error
+        *ngIf="form.get('password').hasError('passwordNoPattern') && !form.get('password').hasError('required')">
+        {{ 'auth.form_error_password_patern' | translate }}
+      </mat-error>
+      <mat-error *ngIf="form.get('password').hasError('required')">
+        {{ 'auth.form_error_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="group" *ngIf="data.formFields.indexOf('confirmPassword') !== -1">
+      <input matInput placeholder="{{ 'auth.form_confirmPassword' | translate }}" type="password"
+        name="form-confirmPassword" class="form-control" formControlName="confirmPassword">
+      <mat-error *ngIf="form?.hasError('passwordMismatch')">
+        {{ 'auth.form_error_match_passwords' | translate }}
+      </mat-error>
+      <mat-error
+        *ngIf="form.get('confirmPassword').hasError('passwordNoPattern') && !form.get('confirmPassword').hasError('required') && !form?.hasError('passwordMismatch')">
+        {{ 'auth.form_error_password_patern' | translate }}
+      </mat-error>
+      <mat-error *ngIf="form.get('confirmPassword').hasError('required') && !form?.hasError('passwordMismatch')">
+        {{ 'auth.form_error_required' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="center">
+  <button mat-button mat-raised-button color="primary" (click)="confirm()"
+    *ngIf="data.buttonAccept">{{data.buttonAccept | translate}}</button>
+  <button mat-button mat-raised-button color="primary" [mat-dialog-close]="false"
+    *ngIf="data.buttonCancel">{{data.buttonCancel | translate}}</button>
+</div>

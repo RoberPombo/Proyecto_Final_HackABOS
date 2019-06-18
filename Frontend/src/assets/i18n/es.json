@@ -1,0 +1,46 @@
+{
+  "auth": {
+    "title": "Ojeador Deportivo",
+    "subtitle1": "Bienvenido a la aplicación para",
+    "subtitle2": "promocionar y encontrar a las jovenes promesas del deporte.",
+    "login": "Inicio de sesión",
+    "register": "Registro",
+    "form_email": "Correo electrónico *",
+    "form_password": "Contraseña *",
+    "form_confirmPassword": "Confirme contraseña *",
+    "form_button_login": "Acceder",
+    "form_forget_password": "He olvidado mi contraseña",
+    "form_button_register": "Registrar",
+    "form_resend_email": "No recibí el email de activación",
+    "form_error_required": "El campo es requerido",
+    "form_error_email_patern": "Por favor, ingrese un email válido",
+    "form_error_password_patern": "Mínimo 8 caracteres, una mayuscula, una minúscula y un número",
+    "form_error_match_passwords": "Las contraseñas no coinciden"
+  },
+  "dialog": {
+    "info_activation_email": {
+      "title": "Email de activación:",
+      "message": "Se le ha enviado un email con el título: Ojeador Deportivo. Con un enlace para que pueda activar su cuenta.",
+      "note": "Recuerde resivar la carpeta de correo no deseado/span.",
+      "accept": "Aceptar"
+    },
+    "resend_activation_email": {
+      "title": "Reenviar email activación:",
+      "message": "Confirmenos el email que usó para crear la cuenta.",
+      "accept": "Enviar email",
+      "cancel": "Cancelar"
+    },
+    "info_forgot_password": {
+      "title": "Email de cambio de contraseña:",
+      "message": "Se le ha enviado un email con el título: Ojeador Deportivo. Con un enlace para que pueda confirmar el cambio de contraseña.",
+      "note": "Recuerde resivar la carpeta de correo no deseado/span.",
+      "accept": "Aceptar"
+    },
+    "forgot_password": {
+      "title": "Cambiar contraseña:",
+      "message": "Confirmenos el email que usó para crear la cuenta, y cubra los campos con la nueva contraseña.",
+      "accept": "Solicitar cambio",
+      "cancel": "Cancelar"
+    }
+  }
+}
