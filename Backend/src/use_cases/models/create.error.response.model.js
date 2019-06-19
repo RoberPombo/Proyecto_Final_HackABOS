@@ -64,7 +64,6 @@ const CreateErrorResponseModel = (message, error) => {
 
   const errorResponse = new ErrorResponse(optRes);
 
-
   return errorResponse;
 };
 

@@ -26,7 +26,7 @@ const saveRefreshTokenDatasource = asyncRedisClient => async(
     createdAt,
     deletedAt,
   });
-  await asyncRedisClient.select(1);
+  // await asyncRedisClient.select(1);
   await asyncRedisClient.set(uuid, savedRefreshToken);
   await asyncRedisClient.expire(uuid, expiresIn);
   return true;

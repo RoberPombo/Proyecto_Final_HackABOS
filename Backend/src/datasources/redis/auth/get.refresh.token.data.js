@@ -5,7 +5,7 @@ const getRefreshTokenDatasource = (
   asyncRedisClient,
   getUpdateProfileDatasource,
 ) => async(uuid) => {
-  await asyncRedisClient.select(1);
+  // await asyncRedisClient.select(1);
   const refreshToken = JSON.parse(await asyncRedisClient.get(uuid));
 
   const getProfile = await getUpdateProfileDatasource(refreshToken.userId);

@@ -9,10 +9,11 @@ const checkJwtUseCase = ({
 
   const [prefix, token] = authorization.split(' ');
   if (prefix !== 'Bearer') return CreateErrorResponseModel('Unauthorized user.', []);
-
   if (!token) return CreateErrorResponseModel('Unauthorized user.', []);
 
   const decoded = await checkJwtTokenEntitie(token);
+
+
   if (decoded instanceof Error) return CreateErrorResponseModel('Unauthorized user.', []);
 
   return {

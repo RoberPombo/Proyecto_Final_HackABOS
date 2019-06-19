@@ -30,7 +30,7 @@ const saveUpdateProfileDatasource = (
   });
 
 
-  await asyncRedisClient.select(2);
+  // await asyncRedisClient.select(2);
   await asyncRedisClient.set(userId, savedUpdateProfile);
   await asyncRedisClient.expire(userId, expiresIn);
 

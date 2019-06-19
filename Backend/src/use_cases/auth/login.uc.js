@@ -40,9 +40,9 @@ const loginUseCase = ({
   const savedRefreshToken = await saveRefreshTokenRepositorie(
     authTokens, findedUser[0], ip, userAgent,
   );
-  if (savedRefreshToken instanceof Error) {
-    return CreateErrorResponseModel(savedRefreshToken.message, savedRefreshToken);
-  }
+  // if (savedRefreshToken instanceof Error) {
+  //   return CreateErrorResponseModel(savedRefreshToken.message, savedRefreshToken);
+  // }
 
 
   return CreateResponseModel('User is authenticated.', [authTokens]);
