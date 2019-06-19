@@ -8,8 +8,6 @@ import { UserService } from 'src/app/core/services/user.service';
 import { emailPatternValidator } from 'src/app/shared/validators/email.validator';
 import { passwordPatternValidator } from 'src/app/shared/validators/password.validator';
 import { DialogService } from 'src/app/core/services/dialog.service';
-import { SnackbarService } from 'src/app/core/services/snackbar.service';
-import { SnackbarComponent } from 'src/app/layout/snackbar/snackbar.component';
 
 
 @Component({
@@ -37,7 +35,6 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private userServ: UserService,
-    private snackbarServ: SnackbarService,
   ) { }
 
 

@@ -4,11 +4,11 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 // Material Angular  =========================================================
 import {
-  MatDialogModule,
-  MatInputModule,
   MatButtonModule,
+  MatDialogModule,
   MatDividerModule,
   MatIconModule,
+  MatInputModule,
   MatSnackBarModule,
   MatToolbarModule,
 } from '@angular/material';
@@ -18,6 +18,18 @@ import { CoreModule } from '../core/core.module';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+
+
+const ModulesMaterial = [
+  MatButtonModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatIconModule,
+  MatInputModule,
+  MatSnackBarModule,
+  MatToolbarModule,
+];
+
 
 @NgModule({
   declarations: [
@@ -30,13 +42,7 @@ import { FooterComponent } from './footer/footer.component';
     CommonModule,
     CoreModule,
     ReactiveFormsModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatIconModule,
-    MatInputModule,
-    MatSnackBarModule,
-    MatToolbarModule,
+    ModulesMaterial,
   ],
   exports: [
     HeaderComponent,

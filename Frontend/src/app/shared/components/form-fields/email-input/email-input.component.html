@@ -1,0 +1,15 @@
+<form [formGroup]="parentForm" class="form-group">
+
+  <mat-form-field formGroupName="emailForm">
+    <input matInput type="text" placeholder="{{ 'auth.form_email' | translate }}" class="form-control"
+      formControlName="email">
+    <mat-error
+      *ngIf="emailForm.get('email').hasError('emailNoPattern') && !emailForm.get('email').hasError('required')">
+      {{ 'auth.form_error_email_patern' | translate }}
+    </mat-error>
+    <mat-error *ngIf="emailForm.get('email').hasError('required')">
+      {{ 'auth.form_error_required' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+</form>

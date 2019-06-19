@@ -12,6 +12,6 @@ export class FooterComponent {
 
 
   goToGithub() {
-    window.open('https://github.com/RoberPombo/Proyecto-Final', '_blank');
+    window.open('https://github.com/RoberPombo/Proyecto_Final_HackABOS', '_blank');
   }
 }

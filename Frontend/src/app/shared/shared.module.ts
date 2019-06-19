@@ -1,10 +1,42 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { EmailInputComponent } from './components/form-fields/email-input/email-input.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+} from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from '../core/core.module';
+import { PasswordInputComponent } from './components/form-fields/password-input/password-input.component';
+import { PasswordMatchInputComponent } from './components/form-fields/password-match-input/password-match-input.component';
+
+
+const MaterialModules = [
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+];
+
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    EmailInputComponent,
+    PasswordInputComponent,
+    PasswordMatchInputComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    CoreModule,
+    MaterialModules
+  ],
+  exports: [
+    EmailInputComponent,
+    ReactiveFormsModule,
+    MaterialModules,
   ]
 })
 export class SharedModule { }
