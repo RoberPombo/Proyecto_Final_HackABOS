@@ -74,6 +74,8 @@ const CreateResponseModel = (message, data) => {
 
   const response = options.filter(option => option.message === message);
 
+  console.log('create response model', response);
+
   return response[0];
 };
 

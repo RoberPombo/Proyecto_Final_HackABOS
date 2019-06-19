@@ -10,7 +10,7 @@ const loginController = loginUseCase => async(req, _res, next) => {
   const response = await loginUseCase({ email, password }, ip, userAgent);
   if (response instanceof Error) return next(response);
 
-
+  console.log('controlador login, pasando al next final');
   req.response = response;
   return next();
 };

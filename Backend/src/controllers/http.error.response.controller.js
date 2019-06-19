@@ -8,6 +8,7 @@ const httpErrorResponseController = httpErrorResponseMapper => async(err, _req, 
   }
 
   const { status, message, data } = httpErrorResponseMapper(err);
+  console.log(err);
   if (data.length === 0) return res.status(status).send({ message });
 
 

@@ -97,7 +97,7 @@ const httpResponseMapper = (response) => {
   const httpResponse = optionsHttp.filter(
     option => option.message === response.message
   );
-
+  console.log('maper http response', httpResponse);
 
   return httpResponse[0];
 };

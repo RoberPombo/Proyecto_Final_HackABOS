@@ -4,17 +4,11 @@
 const asyncRedis = require('async-redis');
 // Declared environment variables ==================================================================
 const {
-  REDIS_HOST: redisHost,
-  REDIS_PORT: redisPort,
-  REDIS_PASSWORD: redisPassword,
+  REDISCLOUD_URL: redisCloudUrl,
 } = process.env;
 
 
-const asyncRedisClient = asyncRedis.createClient({
-  host: redisHost,
-  port: redisPort,
-  password: redisPassword,
-});
+const asyncRedisClient = asyncRedis.createClient(redisCloudUrl, { no_ready_check: true });
 
 
 asyncRedisClient.on('error', (err) => {
