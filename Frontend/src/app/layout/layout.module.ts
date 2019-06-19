@@ -18,6 +18,7 @@ import { CoreModule } from '../core/core.module';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 const ModulesMaterial = [
@@ -42,6 +43,7 @@ const ModulesMaterial = [
     CommonModule,
     CoreModule,
     ReactiveFormsModule,
+    SharedModule,
     ModulesMaterial,
   ],
   exports: [

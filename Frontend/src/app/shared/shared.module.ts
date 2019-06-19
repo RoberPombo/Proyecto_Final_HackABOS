@@ -24,19 +24,21 @@ const MaterialModules = [
   declarations: [
     EmailInputComponent,
     PasswordInputComponent,
-    PasswordMatchInputComponent
+    PasswordMatchInputComponent,
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
     CoreModule,
-    MaterialModules
+    HttpClientModule,
+    MaterialModules,
+    ReactiveFormsModule,
   ],
   exports: [
     EmailInputComponent,
-    ReactiveFormsModule,
     MaterialModules,
+    PasswordInputComponent,
+    PasswordMatchInputComponent,
+    ReactiveFormsModule,
   ]
 })
 export class SharedModule { }

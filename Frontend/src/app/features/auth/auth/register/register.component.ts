@@ -1,9 +1,8 @@
 // Angular ===================================================================
-import { Component } from '@angular/core';
-import { FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroupDirective, FormGroup } from '@angular/forms';
 // Locals ====================================================================
 import { AuthComponent } from '../auth.component';
-import { AuthService } from 'src/app/core/services/auth.service';
 import { emailPatternValidator } from 'src/app/shared/validators/email.validator';
 import { matchPasswordValidator } from 'src/app/shared/validators/match-password.validator';
 import { passwordPatternValidator } from 'src/app/shared/validators/password.validator';
@@ -16,16 +15,9 @@ import { UserService } from 'src/app/core/services/user.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
-  registerForm = this.fb.group({
-    email: ['', [Validators.required, emailPatternValidator,]],
-    password: ['', [Validators.required, passwordPatternValidator,]],
-    confirmPassword: ['', [Validators.required, passwordPatternValidator,]],
-  },
-    { validators: matchPasswordValidator }
-  );
-
+  @Input() public registerForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -34,12 +26,19 @@ export class RegisterComponent {
     private userServ: UserService,
   ) { }
 
+  ngOnInit() {
+    this.registerForm = this.fb.group({
+    });
+  }
 
-  register(formDirective: FormGroupDirective) {
-    if (this.registerForm.valid) {
-      const { email, password } = this.registerForm.value;
+  onSubmit(form, formDirective: FormGroupDirective) {
+    if (form.valid) {
+      const formValues: any = (Object.keys(form.value).reduce((c, k) => {
+        c[k] = form.value[k][k];
+        return c;
+      }, {}));
 
-      this.userServ.register({ email, password })
+      this.userServ.register(formValues)
         .subscribe(() => {
           this.dialogServ.openDialog('infoActivationEmail')
             .subscribe(

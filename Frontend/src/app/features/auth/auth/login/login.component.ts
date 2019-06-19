@@ -1,6 +1,6 @@
 // Angular ===================================================================
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 // Locals ====================================================================
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -15,19 +15,9 @@ import { DialogService } from 'src/app/core/services/dialog.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  loginForm = this.fb.group({
-    email: ['', [
-      Validators.required,
-      emailPatternValidator,
-    ]],
-    password: ['', [
-      Validators.required,
-      passwordPatternValidator,
-    ]],
-  });
-
+  @Input() public loginForm: FormGroup;
 
   constructor(
     private authServ: AuthService,
@@ -37,16 +27,26 @@ export class LoginComponent {
     private userServ: UserService,
   ) { }
 
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+    });
+  }
 
-  login() {
-    if (this.loginForm.valid) {
-      this.authServ.login(this.loginForm.value).subscribe(
+
+  onSubmit(form) {
+    if (form.valid) {
+      const formValues: any = (Object.keys(form.value).reduce((c, k) => {
+        c[k] = form.value[k][k];
+        return c;
+      }, {}));
+
+      this.authServ.login(formValues).subscribe(
         () => {
           this.userServ.getUserProfile().subscribe(
             () => this.router.navigate(['/']),
           );
         },
-        () => this.loginForm.get('password').setValue(''),
+        () => this.loginForm.get('password.password').setValue(''),
       );
     }
   }

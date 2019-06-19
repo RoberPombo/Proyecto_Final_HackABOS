@@ -22,6 +22,6 @@ export class EmailInputComponent implements OnInit {
         emailPatternValidator,
       ]),
     });
-    this.parentForm.addControl('emailForm', this.emailForm);
+    this.parentForm.addControl('email', this.emailForm);
   }
 }

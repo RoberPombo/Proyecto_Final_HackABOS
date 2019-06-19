@@ -10,35 +10,35 @@ export class DialogModal {
   constructor(type: string) {
     if (type === 'infoActivationEmail') {
       this.type = type;
-      this.title = 'dialog.info_activation_email.title';
-      this.message = 'dialog.info_activation_email.message';
-      this.note = 'dialog.info_activation_email.note';
+      this.title = 'dialog.infoActivationEmail.title';
+      this.message = 'dialog.infoActivationEmail.message';
+      this.note = 'dialog.infoActivationEmail.note';
       this.formFields = [];
-      this.buttonAccept = 'dialog.info_activation_email.accept';
+      this.buttonAccept = 'dialog.infoActivationEmail.accept';
       this.buttonCancel = '';
     } else if (type === 'resendActivationEmail') {
       this.type = type;
-      this.title = 'dialog.resend_activation_email.title';
-      this.message = 'dialog.resend_activation_email.message';
-      this.note = 'dialog.resend_activation_email.note';
+      this.title = 'dialog.resendActivationEmail.title';
+      this.message = 'dialog.resendActivationEmail.message';
+      this.note = 'dialog.resendActivationEmail.note';
       this.formFields = ['email'];
-      this.buttonAccept = 'dialog.resend_activation_email.accept';
+      this.buttonAccept = 'dialog.resendActivationEmail.accept';
       this.buttonCancel = '';
     } else if (type === 'infoForgotPassword') {
       this.type = type;
-      this.title = 'dialog.info_forgot_password.title';
-      this.message = 'dialog.info_forgot_password.message';
-      this.note = 'dialog.info_forgot_password.note';
+      this.title = 'dialog.infoForgotPassword.title';
+      this.message = 'dialog.infoForgotPassword.message';
+      this.note = 'dialog.infoForgotPassword.note';
       this.formFields = [];
-      this.buttonAccept = 'dialog.info_forgot_password.accept';
+      this.buttonAccept = 'dialog.infoForgotPassword.accept';
     } else if (type === 'forgotPassword') {
       this.type = type;
-      this.title = 'dialog.forgot_password.title';
-      this.message = 'dialog.forgot_password.message';
-      this.note = 'dialog.forgot_password.note';
+      this.title = 'dialog.forgotPassword.title';
+      this.message = 'dialog.forgotPassword.message';
+      this.note = 'dialog.forgotPassword.note';
       this.formFields = ['email', 'password', 'confirmPassword'];
-      this.buttonAccept = 'dialog.forgot_password.accept';
-      this.buttonCancel = 'dialog.forgot_password.cancel';
+      this.buttonAccept = 'dialog.forgotPassword.accept';
+      this.buttonCancel = 'dialog.forgotPassword.cancel';
     }
   }
 }
