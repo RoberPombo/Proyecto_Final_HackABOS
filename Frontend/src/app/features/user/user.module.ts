@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { MatTabsModule } from '@angular/material';
 
 const routes: Routes = [
   {
@@ -23,6 +23,7 @@ const routes: Routes = [
     LayoutModule,
     RouterModule.forChild(routes),
     SharedModule,
+    MatTabsModule
   ]
 })
 export class UserModule { }

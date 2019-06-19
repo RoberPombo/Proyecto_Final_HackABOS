@@ -1,4 +1,16 @@
 form {
   display: flex;
   flex-direction: column;
+  mat-tab-group {
+    max-width: 100%;
+  }
+  .tab-content {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-style: outset;
+    border-radius: 8px;
+  }
+  button {
+    margin: 0.5rem;
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { emailPatternValidator } from 'src/app/shared/validators/email.validator';
 
 @Component({
@@ -13,7 +13,7 @@ export class EmailInputComponent implements OnInit {
 
   emailForm: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor() { }
 
   ngOnInit() {
     this.emailForm = new FormGroup({

@@ -1,4 +1,7 @@
 {
+  "en": "English",
+  "es": "Español",
+  "soccer": "Futbol",
   "auth": {
     "title": "Ojeador Deportivo",
     "subtitle1": "Bienvenido a la aplicación para",
@@ -14,6 +17,17 @@
       "submit": "Registrar"
     }
   },
+  "user": {
+    "title": "Perfil del usuario",
+    "config": "Usuario",
+    "profile": "Domicilio",
+    "contact": "Contacto",
+    "submit": "Guardar cambios",
+    "email": "Correo electrónico",
+    "spain": "España",
+    "portuguese": "Portugal",
+    "france": "francia"
+  },
   "formFields": {
     "email": "Correo electrónico *",
     "password": "Contraseña *",
@@ -21,7 +35,22 @@
     "errorRequired": "El campo es requerido",
     "emailErrorPattern": "Por favor, ingrese un email válido",
     "passwordErrorPattern": "Mínimo 8 caracteres, una mayuscula, una minúscula y un número",
-    "passwordErrorNoMatch": "Las contraseñas no coinciden"
+    "passwordErrorNoMatch": "Las contraseñas no coinciden",
+    "fullName": "Nombre y apellidos",
+    "document": "Documento de identidad",
+    "address1": "Dirección",
+    "address2": "Dirección (continuación)",
+    "city": "Ciudad",
+    "country": "País",
+    "phone": "Teléfono fijo",
+    "mobile": "Teléfono movil",
+    "other": "Otra forma de contacto",
+    "role": "Rol",
+    "language": "Idioma*",
+    "sport": "Deporte*",
+    "range": "El valor tiene que estar entre: ",
+    "length": "El número de caracteres tiene que estar entre: ",
+    "pattern": "Por favor, ingrese una entrada válida"
   },
   "dialog": {
     "infoActivationEmail": {

@@ -1,52 +1,42 @@
 // Angular ===================================================================
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 // Material Angular  =========================================================
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 // Locals ====================================================================
 import { DialogModal } from './dialog.models';
-import { FormBuilder, Validators } from '@angular/forms';
-import { emailPatternValidator } from 'src/app/shared/validators/email.validator';
-import { passwordPatternValidator } from 'src/app/shared/validators/password.validator';
-import { matchPasswordValidator } from 'src/app/shared/validators/match-password.validator';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent {
+export class DialogComponent implements OnInit {
 
-  form;
+  @Input() public dialogForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogModal,
-  ) {
-    if (this.data.type === 'resendActivationEmail') {
-      this.form = this.fb.group({
-        email: ['', [Validators.required, emailPatternValidator]],
-      });
-    } else if (this.data.type === 'forgotPassword') {
-      this.form = this.fb.group({
-        email: ['', [Validators.required, emailPatternValidator,]],
-        password: ['', [Validators.required, passwordPatternValidator,]],
-        confirmPassword: ['', [Validators.required, passwordPatternValidator,]],
-      },
-        { validators: matchPasswordValidator }
-      );
-    }
-  }
+  ) { }
 
+  ngOnInit() {
+    this.dialogForm = this.fb.group({
+    });
+  }
 
   confirm() {
     if (this.data.type === 'infoActivationEmail' || this.data.type === 'infoForgotPassword') {
       return this.dialogRef.close();
     }
-    if (this.form.valid) {
-      const { email } = this.form.value;
-      return this.dialogRef.close(this.form.value);
+    if (this.dialogForm.valid) {
+      const formValues: any = (Object.keys(this.dialogForm.value).reduce((c, k) => {
+        c[k] = this.dialogForm.value[k][k];
+        return c;
+      }, {}));
+
+      return this.dialogRef.close(formValues);
     }
   }
 

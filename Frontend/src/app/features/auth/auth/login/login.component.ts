@@ -1,12 +1,10 @@
 // Angular ===================================================================
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 // Locals ====================================================================
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/user.service';
-import { emailPatternValidator } from 'src/app/shared/validators/email.validator';
-import { passwordPatternValidator } from 'src/app/shared/validators/password.validator';
 import { DialogService } from 'src/app/core/services/dialog.service';
 
 

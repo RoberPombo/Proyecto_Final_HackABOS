@@ -1,9 +1,52 @@
-<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
+<h2>{{ 'user.title' | translate }}:</h2>
 
-  <app-email-input [parentForm]="myForm"></app-email-input>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
 
+  <mat-tab-group mat-stretch-tabs>
 
-  <button mat-raised-button color="primary" type="submit" name="login-button">
-    {{ 'auth.form_button_login' | translate }}
+    <mat-tab label="{{ 'user.config' | translate }}">
+      <section class="tab-content">
+        <app-email-input [parentForm]="userForm"></app-email-input>
+        <app-adaptive-field [parentForm]="userForm" [settingsField]="['role']"></app-adaptive-field>
+
+        <app-autocomplete-field [parentForm]="userForm" [settingsField]="['language', ['es', 'en'], 'required']">
+        </app-autocomplete-field>
+
+        <app-autocomplete-field [parentForm]="userForm" [settingsField]="['sport', ['soccer'], 'required']">
+        </app-autocomplete-field>
+
+      </section>
+    </mat-tab>
+
+    <mat-tab label="{{ 'user.profile' | translate }}">
+      <section class="tab-content">
+        <app-adaptive-field [parentForm]="userForm" [settingsField]="['fullName', 'length(5,30)']">
+        </app-adaptive-field>
+        <app-adaptive-field [parentForm]="userForm" [settingsField]="['document', 'length(5,15)']"></app-adaptive-field>
+        <app-adaptive-field [parentForm]="userForm" [settingsField]="['address1', 'length(5,30)']"></app-adaptive-field>
+        <app-adaptive-field [parentForm]="userForm" [settingsField]="['address2', 'length(5,30)']"></app-adaptive-field>
+        <app-adaptive-field [parentForm]="userForm" [settingsField]="['city', 'length(3,15)']"></app-adaptive-field>
+        <app-autocomplete-field [parentForm]="userForm"
+          [settingsField]="['country', ['spain', 'portuguese', 'france']]">
+        </app-autocomplete-field>
+      </section>
+    </mat-tab>
+
+    <mat-tab label="{{ 'user.contact' | translate }}">
+      <section class="tab-content">
+        <app-adaptive-field [parentForm]="userForm" [settingsField]="['phone', 'length(6,15)']"></app-adaptive-field>
+        <app-adaptive-field [parentForm]="userForm" [settingsField]="['mobile', 'length(6,15)']"></app-adaptive-field>
+        <app-adaptive-field [parentForm]="userForm"
+          [settingsField]="['email', 'pattern(/^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/)']">
+        </app-adaptive-field>
+        <app-adaptive-field [parentForm]="userForm" [settingsField]="['other', 'length(6,30)']"></app-adaptive-field>
+      </section>
+    </mat-tab>
+
+  </mat-tab-group>
+
+  <button mat-raised-button color="primary" type="submit" name="user-button">
+    {{ 'user.submit' | translate }}
   </button>
+
 </form>

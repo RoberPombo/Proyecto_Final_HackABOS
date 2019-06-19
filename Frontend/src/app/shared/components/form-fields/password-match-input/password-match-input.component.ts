@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { passwordPatternValidator } from 'src/app/shared/validators/password.validator';
 import { matchPasswordValidator } from 'src/app/shared/validators/match-password.validator';
 
@@ -15,7 +15,7 @@ export class PasswordMatchInputComponent implements OnInit {
 
   passwordForm: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor() { }
 
   ngOnInit() {
     this.passwordForm = new FormGroup({
@@ -31,5 +31,13 @@ export class PasswordMatchInputComponent implements OnInit {
       { validators: matchPasswordValidator }
     );
     this.parentForm.addControl('password', this.passwordForm);
+  }
+
+  submint() {
+    const test = new FormControl('');
+    test.setValidators([Validators.required, Validators.minLength(3)]);
+    this.passwordForm.addControl('test', test);
+
+    this.passwordForm.controls.confirmPassword.setValidators(Validators.required);
   }
 }

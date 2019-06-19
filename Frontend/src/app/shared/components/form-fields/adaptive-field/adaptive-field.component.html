@@ -1,0 +1,25 @@
+<form [formGroup]="parentForm" class="form-group">
+
+  <mat-form-field formGroupName="{{nameField}}">
+    <input matInput type="text" placeholder="{{ translateNameField | translate }}" class="form-control"
+      formControlName="{{nameField}}">
+    <mat-error *ngIf="(formGroup.get(nameField).hasError('min') ||
+      formGroup.get(nameField).hasError('max')) &&
+      !formGroup.get(nameField).hasError('required')">
+      {{ 'formFields.range' | translate }}[ {{min}}, {{max}} ]
+    </mat-error>
+    <mat-error *ngIf="(formGroup.get(nameField).hasError('minlength') ||
+    formGroup.get(nameField).hasError('maxlength')) &&
+    !formGroup.get(nameField).hasError('required')">
+      {{ 'formFields.length' | translate }}[ {{min}}, {{max}} ]
+    </mat-error>
+    <mat-error *ngIf="formGroup.get(nameField).hasError('pattern') &&
+    !formGroup.get(nameField).hasError('required')">
+      {{ 'formFields.pattern' | translate }}
+    </mat-error>
+    <mat-error *ngIf="formGroup.get(nameField).hasError('required')">
+      {{ 'formFields.errorRequired' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+</form>
