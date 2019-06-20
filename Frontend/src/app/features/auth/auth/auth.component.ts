@@ -19,9 +19,7 @@ export class AuthComponent implements OnInit {
   public registerClass: string;
   public liClass: string;
 
-  constructor(
-    private authServ: AuthService
-  ) {
+  constructor() {
   }
 
   ngOnInit() {

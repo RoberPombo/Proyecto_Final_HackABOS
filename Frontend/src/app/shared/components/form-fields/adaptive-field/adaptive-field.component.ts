@@ -9,8 +9,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class AdaptiveFieldComponent implements OnInit {
 
   @Input() parentForm: FormGroup;
-  // Example ['nameField', 'required', 'range(0,10)', 'length(3,10)', 'pattern(regxPattern)']
+  // Example ['nameField', 'disable', 'required', 'range(0,10)', 'length(3,10)', 'pattern(regxPattern)']
   @Input() settingsField: string[];
+  @Input() value: any;
 
   formGroup: FormGroup;
   formControl: FormControl;
@@ -26,8 +27,11 @@ export class AdaptiveFieldComponent implements OnInit {
     this.translateNameField = `formFields.${this.nameField}`;
 
     this.formGroup = new FormGroup({});
-    this.formControl = new FormControl('');
+    this.formControl = new FormControl(this.value || '');
 
+    if (this.settingsField.indexOf('disabled') !== -1) {
+      this.formControl.disable();
+    }
     if (this.settingsField.indexOf('required') !== -1) {
       this.formControl.setValidators(Validators.required);
     }

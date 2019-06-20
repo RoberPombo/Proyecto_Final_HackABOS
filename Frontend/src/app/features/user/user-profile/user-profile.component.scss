@@ -3,6 +3,29 @@ form {
   flex-direction: column;
   mat-tab-group {
     max-width: 100%;
+    button {
+      width: 100%;
+    }
+    .role-language {
+      display: flex;
+      justify-content: space-around;
+      :first-child {
+        max-width: 35%;
+      }
+      :last-child {
+        max-width: 55%;
+      }
+    }
+    .city-country {
+      display: flex;
+      justify-content: space-around;
+      :first-child {
+        max-width: 45%;
+      }
+      :last-child {
+        max-width: 45%;
+      }
+    }
   }
   .tab-content {
     margin: 0.5rem;
@@ -10,7 +33,7 @@ form {
     border-style: outset;
     border-radius: 8px;
   }
-  button {
+  button[type=submit]{
     margin: 0.5rem;
   }
 }

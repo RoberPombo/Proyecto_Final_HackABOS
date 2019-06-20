@@ -17,7 +17,7 @@ export class UserService {
 
 
   changePassword({ email, password }) {
-    return this.http.post(`${environment.api.uri}/user/password`, {
+    return this.http.post<IUserProfileHttpResponse>(`${environment.api.uri}/user/password`, {
       email,
       password,
     });
@@ -31,7 +31,7 @@ export class UserService {
 
 
   register({ email, password }) {
-    return this.http.post(`${environment.api.uri}/user`, {
+    return this.http.post<IUserProfileHttpResponse>(`${environment.api.uri}/user`, {
       email,
       password,
     });
@@ -39,8 +39,13 @@ export class UserService {
 
 
   resendActivationEmail({ email }) {
-    return this.http.post(`${environment.api.uri}/user/activation`, {
+    return this.http.post<IUserProfileHttpResponse>(`${environment.api.uri}/user/activation`, {
       email,
     });
+  }
+
+
+  updateProfile(userProfile) {
+    return this.http.put<IUserProfileHttpResponse>(`${environment.api.uri}/user`, userProfile);
   }
 }

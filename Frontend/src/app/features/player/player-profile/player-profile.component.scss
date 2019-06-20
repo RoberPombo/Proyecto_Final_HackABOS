@@ -1,0 +1,55 @@
+form {
+  display: flex;
+  flex-direction: column;
+  mat-tab-group {
+    max-width: 100%;
+    mat-form-field {
+      text-align: center;
+    }
+    button {
+      width: 100%;
+    }
+  }
+  button[type=submit]{
+    margin: 0.5rem;
+  }
+}
+.birthdate-nationality {
+  display: flex;
+  justify-content: space-around;
+  :first-child {
+    max-width: 58%;
+  }
+  :last-child {
+    max-width: 37%;
+  }
+}
+.height-weight, .sport-team {
+  display: flex;
+  justify-content: space-around;
+  :first-child {
+    max-width: 45%;
+  }
+  :last-child {
+    max-width: 45%;
+  }
+}
+.foot-position {
+  display: flex;
+  justify-content: space-around;
+  :first-child {
+    max-width: 30%;
+  }
+  :last-child {
+    max-width: 65%;
+  }
+}
+.tab-content {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  border-style: outset;
+  border-radius: 8px;
+}
+button[type=submit]{
+  margin: 0.5rem;
+}

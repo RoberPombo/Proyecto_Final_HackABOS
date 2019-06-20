@@ -1,8 +1,18 @@
 <form [formGroup]="parentForm" class="form-group">
 
   <mat-form-field formGroupName="{{nameField}}">
-    <input matInput type="text" placeholder="{{ translateNameField | translate }}" class="form-control"
-      formControlName="{{nameField}}" [matAutocomplete]="auto">
+    <mat-select placeholder="{{ translateNameField | translate }}" class="form-control" formControlName="{{nameField}}"
+      multiple *ngIf="multiple">
+      <mat-option *ngFor="let option of settingsField[1]" [value]="option">
+        {{option | translate}}
+      </mat-option>
+    </mat-select>
+    <mat-select placeholder="{{ translateNameField | translate }}" class="form-control" formControlName="{{nameField}}"
+      *ngIf="!multiple">
+      <mat-option *ngFor="let option of settingsField[1]" [value]="option">
+        {{option | translate}}
+      </mat-option>
+    </mat-select>
     <mat-error *ngIf="(formGroup.get(nameField).hasError('min') ||
         formGroup.get(nameField).hasError('max')) &&
         !formGroup.get(nameField).hasError('required')">
@@ -20,11 +30,7 @@
     <mat-error *ngIf="formGroup.get(nameField).hasError('required')">
       {{ 'formFields.errorRequired' | translate }}
     </mat-error>
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-option *ngFor="let option of settingsField[1] | search:formGroup.get(nameField).value"
-        [value]="option | translate">
-        {{ option | translate }}</mat-option>
-    </mat-autocomplete>
+
   </mat-form-field>
 
 </form>

@@ -9,13 +9,10 @@ export class SearchPipe implements PipeTransform {
       return;
     }
     if (!args) {
-      return value;
+      return;
     }
-    args = args.toLowerCase();
-    return value.filter(item => {
-      return JSON.stringify(item)
-        .toLowerCase()
-        .includes(args);
-    });
+    return value.filter(
+      (item) => item.toLowerCase().includes(args.toLowerCase())
+    );
   }
 }

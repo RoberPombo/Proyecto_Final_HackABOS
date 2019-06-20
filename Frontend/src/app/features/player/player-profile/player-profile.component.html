@@ -1,3 +1,60 @@
-<p>
-  player-profile works!
-</p>
+<h2>{{ 'player.title' | translate }}:</h2>
+
+<form [formGroup]="playerForm" (ngSubmit)="onSubmit(playerForm)" *ngIf='playerData'>
+
+  <section class="tab-content">
+
+    <app-adaptive-field [parentForm]="playerForm" [settingsField]="['fullName', 'length(5,30)', 'required']"
+      [value]="playerData.fullName">
+    </app-adaptive-field>
+
+    <section class="birthdate-nationality">
+      <mat-form-field>
+        <input matInput [matDatepicker]="datepicker" placeholder="{{ 'player.datepicker' | translate}}"
+          formControlName="birthdate">
+        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker></mat-datepicker>
+      </mat-form-field>
+
+      <app-autocomplete-field [parentForm]="playerForm"
+        [settingsField]="['nationality', ['spanish', 'portuguese', 'french'], 'required']"
+        [value]="playerData.nationality">
+      </app-autocomplete-field>
+    </section>
+
+    <section class="height-weight">
+      <app-adaptive-field [parentForm]="playerForm" [settingsField]="['height', 'range(1,2.50)', 'required']"
+        [value]="playerData.height">
+      </app-adaptive-field>
+
+      <app-adaptive-field [parentForm]="playerForm" [settingsField]="['weight', 'range(30,150)', 'required']"
+        [value]="playerData.weight">
+      </app-adaptive-field>
+    </section>
+
+    <section class="sport-team">
+      <app-autocomplete-field [parentForm]="playerForm" [settingsField]="['sport', ['soccer'], 'required']"
+        [value]="playerData.sport">
+      </app-autocomplete-field>
+
+      <app-adaptive-field [parentForm]="playerForm" [settingsField]="['team', 'required']" [value]="playerData.team">
+      </app-adaptive-field>
+    </section>
+
+    <section class="foot-position">
+      <app-autocomplete-field [parentForm]="playerForm"
+        [settingsField]="['preferredFoot', ['left', 'rigth'], 'required']" [value]="playerData.preferredFoot">
+      </app-autocomplete-field>
+
+      <app-autocomplete-field [parentForm]="playerForm"
+        [settingsField]="['preferredPositions', ['GK', 'CB', 'LB', 'RB', 'DM', 'LDM', 'RDM', 'LW', 'RW', 'FW'],'multiple', 'required']"
+        [value]="playerData.preferredPositions">
+      </app-autocomplete-field>
+    </section>
+
+  </section>
+
+  <button mat-raised-button color="primary" type="submit" name="player-button">
+    {{ 'player.submit' | translate }}
+  </button>
+</form>

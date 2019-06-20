@@ -12,7 +12,8 @@
 
 # environment variables
 .env
-/environment
+src/environments/environment.prod.ts
+*.environments.prod.ts
 
 # profiling files
 chrome-profiler-events.json

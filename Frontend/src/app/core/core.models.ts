@@ -19,6 +19,7 @@ export interface IRegisterHttpResponse {
 
 
 export interface IUserProfile {
+  _id: string;
   email: string;
   role: string;
   language: string;
@@ -45,8 +46,45 @@ export interface IUserProfile {
   };
 }
 
+
 export interface IUserProfileHttpResponse {
   id: string;
   message: string;
   data: IUserProfile;
+}
+
+
+export interface IVideosModel {
+  uriVideo: string;
+  likes: number;
+  dislikes: number;
+  views: number;
+  thumbnails: string[];
+  publishAt: number;
+}
+
+
+export interface IPlayerProfile {
+  _id: string;
+  userId: string;
+  fullName: string;
+  birthdate: number;
+  nationality: string;
+  height: number;
+  weight: number;
+  sport: string;
+  team: string;
+  preferredFoot: string;
+  preferredPositions: string[],
+  videos: IVideosModel[],
+  createdAt: number;
+  modifiedAt: number;
+  deletedAt: number;
+}
+
+
+export interface IPlayerProfileHttpResponse {
+  id: string;
+  message: string;
+  data: IPlayerProfile;
 }

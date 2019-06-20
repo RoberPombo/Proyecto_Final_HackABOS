@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
       this.authServ.login(formValues).subscribe(
         () => {
           this.userServ.getUserProfile().subscribe(
-            () => this.router.navigate(['/']),
+            () => this.router.navigate(['/user']),
           );
         },
         () => this.loginForm.get('password.password').setValue(''),

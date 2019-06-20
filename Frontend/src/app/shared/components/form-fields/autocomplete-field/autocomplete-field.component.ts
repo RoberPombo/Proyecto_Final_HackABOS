@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -10,24 +11,29 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class AutocompleteFieldComponent implements OnInit {
 
   @Input() parentForm: FormGroup;
-  // Example ['nameField',[options for autocomplete(string[])], 'required', 'range(0,10)', 'length(3,10)', 'pattern(regxPattern)']
+  // Example ['nameField',[options for autocomplete(string[])],
+  // 'multiple', 'required', 'range(0,10)', 'length(3,10)', 'pattern(regxPattern)']
   @Input() settingsField: any[];
+  @Input() value: any;
 
   formGroup: FormGroup;
   formControl: FormControl;
   nameField: string;
+  optionsAutocomplete = [];
   translateNameField: string;
   min: number;
   max: number;
+  multiple: boolean;
 
   constructor() { }
 
   ngOnInit() {
+    this.multiple = false;
     this.nameField = this.settingsField[0];
     this.translateNameField = `formFields.${this.nameField}`;
 
     this.formGroup = new FormGroup({});
-    this.formControl = new FormControl('');
+    this.formControl = new FormControl(this.value || '');
 
     if (this.settingsField.indexOf('required') !== -1) {
       this.formControl.setValidators(Validators.required);
@@ -50,6 +56,10 @@ export class AutocompleteFieldComponent implements OnInit {
         this.max = +max;
         this.formControl.setValidators([Validators.minLength(this.min), Validators.maxLength(this.max)]);
       }
+      if (setting.includes('multiple')) {
+        this.multiple = true;
+      }
+
     });
 
     this.formGroup.addControl(this.nameField, this.formControl);
