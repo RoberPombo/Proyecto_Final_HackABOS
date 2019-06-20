@@ -70,6 +70,11 @@ const CreateResponseModel = (message, data) => {
     message: 'Updated profile.',
     data: [],
   },
+  {
+    title: 'VideoAdded',
+    message: 'Video added.',
+    data: [],
+  },
   ];
 
   const response = options.filter(option => option.message === message);

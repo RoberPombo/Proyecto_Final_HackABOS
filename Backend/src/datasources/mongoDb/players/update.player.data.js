@@ -21,8 +21,20 @@ const updatePlayerDatasource = (
     await cleanDB(userId);
     saveUpdateProfileDatasource(userId, { role: 'user', playerId: '' });
   } else if (option === 'profile') {
+    // eslint-disable-next-line no-param-reassign
     dataUpdate.birthdate = new Date(dataUpdate.birthdate).getTime();
     operation = { ...dataUpdate, modifiedAt: Date.now() };
+  } else if (option === 'addVideo') {
+    operation = {
+      $push: {
+        videos: {
+          videoId: dataUpdate.id,
+          views: dataUpdate.viewCount,
+          likes: dataUpdate.likeCount,
+          publishedAt: dataUpdate.publishedAt,
+        },
+      },
+    };
   }
 
 

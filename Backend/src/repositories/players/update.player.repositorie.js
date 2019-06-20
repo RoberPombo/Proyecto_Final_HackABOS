@@ -12,6 +12,8 @@ const updatePlayerRepositorie = (
       updatedPlayer = await updatePlayerDatasource.delete(userId, playerId, sport, '');
     } else if (option === 'profile') {
       updatedPlayer = await updatePlayerDatasource.profile(userId, playerId, sport, dataUpdate);
+    } else if (option === 'addVideo') {
+      updatedPlayer = await updatePlayerDatasource.addVideo(userId, playerId, sport, dataUpdate);
     }
   } catch (e) {
     return new Error('Internal server error.');

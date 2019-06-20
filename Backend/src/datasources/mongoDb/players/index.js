@@ -18,6 +18,7 @@ module.exports = {
     updateUserDatasource.addPlayer,
   ),
   updatePlayerDatasource: {
+    addVideo: updatePlayerDatasource(CreatePlayerModelData, 'addVideo'),
     delete: updatePlayerDatasource(
       CreatePlayerModelData, 'delete',
       saveUpdateProfileDatasource,

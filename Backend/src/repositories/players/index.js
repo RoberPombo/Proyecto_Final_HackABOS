@@ -16,6 +16,7 @@ module.exports = {
   },
   savePlayerRepositorie: savePlayerRepositorie(savePlayerDatasource),
   updatePlayerRepositorie: {
+    addVideo: updatePlayerRepositorie(updatePlayerDatasource, 'addVideo'),
     delete: updatePlayerRepositorie(updatePlayerDatasource, 'delete'),
     profile: updatePlayerRepositorie(updatePlayerDatasource, 'profile'),
   },

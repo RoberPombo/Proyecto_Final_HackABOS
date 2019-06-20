@@ -2,6 +2,7 @@
 
 
 // Local imports: this module ======================================================================
+const { addVideoUseCase } = require('./add.video.uc');
 const { createPlayerUseCase } = require('./create.player.uc');
 const { deletePlayerUseCase } = require('./delete.player.uc');
 const { getPlayersUseCase } = require('./get.players.uc');
@@ -15,6 +16,11 @@ const { findUserRepositorie } = require('../../repositories/user/index');
 
 
 module.exports = {
+  addVideoUseCase: addVideoUseCase({
+    CreateErrorResponseModel,
+    CreateResponseModel,
+    updatePlayerRepositorie,
+  }),
   createPlayerUseCase: createPlayerUseCase({
     CreateErrorResponseModel,
     CreateResponseModel,

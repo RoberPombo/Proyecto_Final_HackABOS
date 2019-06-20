@@ -5,6 +5,7 @@ const express = require('express');
 // Local imports. ==================================================================================
 const { checkJwtController } = require('../controllers/auth/index');
 const {
+  addVideoController,
   createPlayerController,
   deletePlayerController,
   getPlayerController,
@@ -23,6 +24,8 @@ playerRoutes.get('/:id', checkJwtController, getPlayerController);
 playerRoutes.put('/:id', checkJwtController, updatePlayerProfileController);
 
 playerRoutes.delete('/:id', checkJwtController, deletePlayerController);
+
+playerRoutes.post('/video', checkJwtController, addVideoController);
 
 playerRoutes.post('/youtube', checkJwtController, searchVideosYoutubeController);
 

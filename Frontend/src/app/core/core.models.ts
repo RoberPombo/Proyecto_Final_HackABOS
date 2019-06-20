@@ -55,11 +55,9 @@ export interface IUserProfileHttpResponse {
 
 
 export interface IVideosModel {
-  uriVideo: string;
+  videoId: string;
   likes: number;
-  dislikes: number;
   views: number;
-  thumbnails: string[];
   publishAt: number;
 }
 

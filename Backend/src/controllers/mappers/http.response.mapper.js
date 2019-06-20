@@ -80,6 +80,13 @@ const httpResponseMapper = (response) => {
     data: response.data,
   },
   {
+    status: 201,
+    title: 'VideoAdded',
+    message: 'Video added.',
+    data: [],
+  },
+
+  {
     status: 202,
     title: 'AuthenticatedUser',
     message: 'User is authenticated.',

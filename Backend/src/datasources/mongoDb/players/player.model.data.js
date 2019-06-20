@@ -21,13 +21,13 @@ const PlayerSchema = new Schema({
   preferredFoot: String,
   preferredPositions: [],
   videos: [{
-    id: {
+    videoId: {
       type: String,
       unique: true,
     },
     views: Number,
     likes: Number,
-    publishedAt: [],
+    publishedAt: String,
   }],
   createdAt: Number,
   modifiedAt: Number,

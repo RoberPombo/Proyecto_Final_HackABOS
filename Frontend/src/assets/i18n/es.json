@@ -72,7 +72,9 @@
     "submit": "Guardar cambios"
   },
   "youtube": {
-    "add": "Añadir video a promesa"
+    "add": "Añadir video a promesa",
+    "input": "Filtro",
+    "button": "Buscar"
   },
   "formFields": {
     "email": "Correo electrónico *",

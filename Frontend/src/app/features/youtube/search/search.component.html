@@ -1,4 +1,20 @@
-<section *ngFor="let video of videos">
+<section class="search">
+
+  <form [formGroup]="searchForm">
+    <i class="material-icons" (click)="prevPage()"> arrow_left </i>
+    <mat-form-field>
+      <input matInput type="text" placeholder="{{'youtube.input' | translate}}" class="form-control"
+        formControlName="search">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="searchYoutube()">{{ 'youtube.button' | translate}}</button>
+    <i class="material-icons" (click)="nextPage()"> arrow_right </i>
+  </form>
+
+</section>
+
+
+
+<section class="content" *ngFor="let video of videos">
 
   <mat-card class="complete-card">
     <mat-card-header class="header-card">
