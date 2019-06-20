@@ -65,8 +65,8 @@ export interface IVideosModel {
 
 
 export interface IPlayerProfile {
-  _id: string;
-  userId: string;
+  _id?: string;
+  userId?: string;
   fullName: string;
   birthdate: number;
   nationality: string;
@@ -75,11 +75,11 @@ export interface IPlayerProfile {
   sport: string;
   team: string;
   preferredFoot: string;
-  preferredPositions: string[],
-  videos: IVideosModel[],
-  createdAt: number;
-  modifiedAt: number;
-  deletedAt: number;
+  preferredPositions: string[];
+  videos?: IVideosModel[];
+  createdAt?: number;
+  modifiedAt?: number;
+  deletedAt?: number;
 }
 
 
@@ -87,4 +87,31 @@ export interface IPlayerProfileHttpResponse {
   id: string;
   message: string;
   data: IPlayerProfile;
+}
+
+
+export interface IYoutubeVideosModel {
+  channelTitle: string;
+  dislikeCount: number;
+  embedHtml: string;
+  id: string;
+  likeCount: string;
+  publishedAt: string;
+  title: string;
+  viewCounts: number;
+  thumbnails: {
+    default: { url: string };
+    standard: { url: string };
+    medium: { url: string };
+    maxres: { url: string };
+    high: { url: string };
+  };
+}
+
+
+export interface IYoutubeHttpResponse {
+  nextPageToken: string;
+  prevPageToken?: string;
+  totalResults: number;
+  items: IYoutubeVideosModel[];
 }

@@ -7,6 +7,8 @@ import { TranslateModule } from '@ngx-translate/core';
 // Locals ====================================================================
 import { JWTInterceptor } from './interceptors/tokens.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
+
 
 @NgModule({
   declarations: [],
@@ -19,6 +21,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
   ]
 })
 export class CoreModule { }

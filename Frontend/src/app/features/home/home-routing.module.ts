@@ -13,6 +13,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: 'players/youtube',
+        loadChildren: () => import('../youtube/youtube.module').then(mod => mod.YoutubeModule),
+      },
+      {
+        path: 'players',
+        loadChildren: () => import('../players/players.module').then(mod => mod.PlayersModule),
+      },
+      {
         path: 'user',
         loadChildren: () => import('../user/user.module').then(mod => mod.UserModule),
       },
@@ -20,12 +28,13 @@ const routes: Routes = [
         path: 'players/:id',
         loadChildren: () => import('../player/player.module').then(mod => mod.PlayerModule),
       },
-      {
-        path: 'players',
-        loadChildren: () => import('../players/players.module').then(mod => mod.PlayersModule),
-      }
     ]
   },
+  {
+    path: '**',
+    redirectTo: 'user',
+    pathMatch: 'full'
+  }
 ];
 
 

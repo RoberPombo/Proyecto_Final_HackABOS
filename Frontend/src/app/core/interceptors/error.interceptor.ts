@@ -33,17 +33,21 @@ export class ErrorInterceptor implements HttpInterceptor {
           error.status === 401 && this.authService.rejectRefreshToken === false &&
           this.authService.authTokens && this.authService.authTokens.refreshToken
         ) {
+          console.log('refreshToken');
           this.authService.refreshToken().subscribe();
         } else if (
           error.url.indexOf('/auth') === -1 &&
           this.router.routerState.snapshot.url !== '/auth' &&
           error.status === 401
         ) {
+          console.log('logout');
           this.authService.logout();
         } else {
+          console.log('snackbar');
           this.snackServ.openSnackbar(error.error.message, 'red-snackbar', 3);
         }
-
+        console.log('error')
+        this.router.navigate(['/user']);
         return throwError(error);
       })
     );

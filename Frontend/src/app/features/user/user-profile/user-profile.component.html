@@ -1,6 +1,6 @@
 <h2>{{ 'user.title' | translate }}:</h2>
 
-<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)" *ngIf='userData'>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)" *ngIf="userData && userData.role !== 'user'">
 
   <mat-tab-group mat-stretch-tabs>
 
@@ -9,7 +9,8 @@
         <app-email-input [parentForm]="userForm" [value]="[userData.email, 'disabled']"></app-email-input>
 
         <section class="role-language">
-          <app-adaptive-field [parentForm]="userForm" [settingsField]="['role', 'disabled']" [value]="userData.role">
+          <app-adaptive-field [parentForm]="userForm" [settingsField]="['role', 'disabled']"
+            [value]="userData.role | translate">
           </app-adaptive-field>
           <app-autocomplete-field [parentForm]="userForm" [settingsField]="['language', ['es', 'en'], 'required']"
             [value]="userData.language">
@@ -20,11 +21,11 @@
         </app-autocomplete-field>
 
         <button mat-button color="primary" type="button" name="scout-button1"
-          *ngIf="userData && userData.role === 'scout'">
+          *ngIf="userData && userData.role === 'scout'" (click)="goPlayerProfile()">
           {{ 'user.scoutButton1' | translate }}
         </button>
         <button mat-button color="primary" type="button" name="scout-button2"
-          *ngIf="userData && userData.role === 'scout'">
+          *ngIf="userData && userData.role === 'scout'" (click)="addVideosPlayer()">
           {{ 'user.scoutButton2' | translate }}
         </button>
         <button mat-button color="primary" type="button" name="team-button1"
@@ -83,11 +84,29 @@
 
   </mat-tab-group>
 
+
   <button mat-raised-button color="primary" type="submit" name="user-button">
     {{ 'user.submit' | translate }}
   </button>
 
-  <!-- <ng-component *ngFor="let field of userServ.getUserProfile.data">
-    <p>{{field}}</p>
-  </ng-component> -->
 </form>
+
+
+<section class="select-role" *ngIf="userData && userData.role === 'user'">
+  <h3>{{ 'user.select' | translate }}</h3>
+
+  <p>{{ 'user.scout_info' | translate }}</p>
+
+  <button mat-raised-button color="primary" type="button" name="scout-button" (click)="becomeAgent()">
+    {{ 'user.scout' | translate }}
+  </button>
+
+  <p>{{ 'user.team_info' | translate }}</p>
+
+  <button mat-raised-button color="primary" type="button" name="team-button" (click)="becomeTeam()">
+    {{ 'user.team' | translate }}
+  </button>
+
+  <p><small>{{ 'user.warning' | translate }}</small></p>
+
+</section>

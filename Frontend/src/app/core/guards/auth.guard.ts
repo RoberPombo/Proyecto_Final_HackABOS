@@ -15,10 +15,14 @@ import { AuthService } from '../services/auth.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authServ: AuthService, private router: Router) { }
+  constructor(
+    private authServ: AuthService,
+    private router: Router
+  ) { }
 
   canActivate(route: ActivatedRouteSnapshot, snapshot: RouterStateSnapshot) {
     if (this.authServ && this.authServ.authTokens) {
+
       const { jwtToken } = this.authServ.authTokens;
 
       if (jwtToken) {

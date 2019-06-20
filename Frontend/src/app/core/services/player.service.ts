@@ -15,11 +15,18 @@ export class PlayerService {
 
   constructor(private http: HttpClient) { }
 
+
+  createPlayer(playerProfile) {
+    return this.http.post<IPlayerProfileHttpResponse>(`${environment.api.uri}/players/`, playerProfile);
+  }
+
+
   getPlayerProfile(id) {
     return this.http
       .get<IPlayerProfileHttpResponse>(`${environment.api.uri}/players/${id}`)
-      .pipe(tap(player => this.playerProfile = player.data));
+      .pipe(tap(player => this.playerProfile = player.data[0]));
   }
+
 
   updateProfile(id, playerProfile) {
     return this.http.put<IPlayerProfileHttpResponse>(`${environment.api.uri}/players/${id}`, playerProfile);

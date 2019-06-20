@@ -6,6 +6,8 @@ import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IAuthTokens, ILoginHttpResponse } from '../core.models';
 import { Router } from '@angular/router';
+import { UserService } from './user.service';
+import { PlayerService } from './player.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,9 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private playerServ: PlayerService,
+    private userServ: UserService,
   ) {
     this.authTokens = JSON.parse(localStorage.getItem('auth'));
   }
@@ -42,6 +46,8 @@ export class AuthService {
     localStorage.removeItem('auth');
     this.authTokens = null;
     this.rejectRefreshToken = false;
+    this.playerServ.playerProfile = undefined;
+    this.userServ.userProfile = undefined;
     this.router.navigate(['/auth']);
   }
 
@@ -53,6 +59,8 @@ export class AuthService {
         this.rejectRefreshToken = false;
         this.authTokens = response.data[0];
         localStorage.setItem('auth', JSON.stringify(this.authTokens));
-      }));
+      },
+        () => this.rejectRefreshToken = true,
+      ));
   }
 }

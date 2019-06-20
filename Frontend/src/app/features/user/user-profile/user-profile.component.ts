@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/core/services/user.service';
 import { IUserProfile } from 'src/app/core/core.models';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
+import { PlayerService } from 'src/app/core/services/player.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,19 +20,56 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private snackServ: SnackbarService,
+    private playerServ: PlayerService,
+    private router: Router,
     public userServ: UserService,
   ) { }
 
   ngOnInit() {
     this.userServ.getUserProfile().subscribe(
-      response => {
-        this.userData = response.data;
-        // TODO: Si role==scout, pedir el perfil del jugador.
+      res => {
+        this.userData = res.data;
+        if (res.data.role === 'scout') {
+          this.playerServ.getPlayerProfile(res.data.agentOf.playerId).subscribe();
+        }
       },
     );
 
     this.userForm = this.fb.group({});
   }
+
+
+  addVideosPlayer() {
+    this.router.navigate(['/players/youtube']);
+  }
+
+
+  becomeAgent() {
+    this.router.navigate(['/players/new']);
+  }
+
+
+  becomeTeam() {
+    this.userServ.updateProfile({
+      email: this.userData.email,
+      role: 'team'
+    }).subscribe();
+    this.userData = undefined;
+    this.userServ.getUserProfile().subscribe(
+      res => {
+        this.userData = res.data;
+        this.snackServ.openSnackbar('Ya puede buscar promesas', 'green-snackbar', 2);
+      },
+    );
+  }
+
+
+  goPlayerProfile() {
+    console.log(this.userData.agentOf);
+    console.log(this.playerServ.playerProfile);
+    this.router.navigate([`/players/${this.userData.agentOf.playerId}`]);
+  }
+
 
   onSubmit(form) {
     if (form.valid) {

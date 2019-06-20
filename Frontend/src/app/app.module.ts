@@ -15,6 +15,7 @@ import { CoreModule } from './core/core.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { LayoutModule } from './layout/layout.module';
+import { AppInitializerModule } from './app-inicializer.module';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -32,6 +33,7 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserModule,
     CoreModule,
     LayoutModule,
+    AppInitializerModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     HttpClientModule,
     TranslateModule.forRoot({

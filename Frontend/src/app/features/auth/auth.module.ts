@@ -17,6 +17,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { LayoutModule } from 'src/app/layout/layout.module';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     AuthRoutingModule,
     CommonModule,
     CoreModule,
+    LayoutModule,
     HttpClientModule,
     MatButtonModule,
     MatFormFieldModule,

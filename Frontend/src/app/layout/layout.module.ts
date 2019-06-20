@@ -9,6 +9,7 @@ import {
   MatDividerModule,
   MatIconModule,
   MatInputModule,
+  MatMenuModule,
   MatSnackBarModule,
   MatToolbarModule,
 } from '@angular/material';
@@ -19,6 +20,7 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SharedModule } from '../shared/shared.module';
+import { LoaderComponent } from './loader/loader.component';
 
 
 const ModulesMaterial = [
@@ -27,6 +29,7 @@ const ModulesMaterial = [
   MatDividerModule,
   MatIconModule,
   MatInputModule,
+  MatMenuModule,
   MatSnackBarModule,
   MatToolbarModule,
 ];
@@ -37,7 +40,8 @@ const ModulesMaterial = [
     DialogComponent,
     SnackbarComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +53,7 @@ const ModulesMaterial = [
   exports: [
     HeaderComponent,
     FooterComponent,
+    LoaderComponent
   ],
   entryComponents: [DialogComponent, SnackbarComponent]
 })

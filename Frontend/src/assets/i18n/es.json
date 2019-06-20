@@ -1,4 +1,6 @@
 {
+  "scout": "Agente",
+  "team": "Equipo",
   "en": "English",
   "es": "Español",
   "soccer": "Futbol",
@@ -21,6 +23,13 @@
   "LW": "Extremo izq.",
   "RW": "Extremo dcho.",
   "FW": "Delantero",
+  "header": {
+    "title": "Ojeador Deportivo",
+    "user": "Ver perfil",
+    "player": "Ver promesa",
+    "search": "Buscar jugadores",
+    "logout": "Cerrar sesión"
+  },
   "auth": {
     "title": "Ojeador Deportivo",
     "subtitle1": "Bienvenido a la aplicación para",
@@ -49,12 +58,21 @@
     "scoutButton1": "Ver perfil de su promesa",
     "scoutButton2": "Buscar videos en youtube para añadir",
     "teamButton1": "Buscar promesas",
-    "teamButton2": "Ver favoritos"
+    "teamButton2": "Ver favoritos",
+    "select": "Seleccione su rol:",
+    "scout": "Promocionar una promesa (Representante)",
+    "team": "Buscar jovenes promesas (Equipo)",
+    "warning": "No se puede cambiar el tipo de usuario una vez lo seleccione.",
+    "scout_info": "Representante - Ver y añadir videos a su joven promesa",
+    "team_info": "Equipo - Buscar jovenes promesas"
   },
   "player": {
     "title": "Perfil del jugador",
     "datepicker": "Fecha de nacimiento*",
     "submit": "Guardar cambios"
+  },
+  "youtube": {
+    "add": "Añadir video a promesa"
   },
   "formFields": {
     "email": "Correo electrónico *",

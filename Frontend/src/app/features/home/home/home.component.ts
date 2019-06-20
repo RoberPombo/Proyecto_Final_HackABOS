@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 // Translate =================================================================
 import { UserService } from 'src/app/core/services/user.service';
+import { Router } from '@angular/router';
 // Material Angular  =========================================================
 
 
@@ -12,7 +13,9 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) {
+    // this.router.navigate(['/user']);
+  }
 
 
   ngOnInit() { }
