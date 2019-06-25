@@ -12,6 +12,7 @@ import {
   MatMenuModule,
   MatSnackBarModule,
   MatToolbarModule,
+  OverlayModule
 } from '@angular/material';
 // Locals ====================================================================
 import { DialogComponent } from './dialog/dialog.component';

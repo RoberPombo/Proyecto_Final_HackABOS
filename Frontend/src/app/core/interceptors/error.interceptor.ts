@@ -45,7 +45,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.snackServ.openSnackbar(error.error.message, 'red-snackbar', 3);
           // this.router.navigate(['/user']);
         }
-        return throwError(error);
+        return; // throwError(error);
       })
     );
   }

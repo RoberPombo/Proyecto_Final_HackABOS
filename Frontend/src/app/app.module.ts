@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 // Material Angular  =========================================================
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OverlayModule } from '@angular/cdk/overlay'
 // Translate =================================================================
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -36,6 +37,7 @@ export function createTranslateLoader(http: HttpClient) {
     AppInitializerModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     HttpClientModule,
+    OverlayModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
