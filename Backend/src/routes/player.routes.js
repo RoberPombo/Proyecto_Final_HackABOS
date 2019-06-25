@@ -3,15 +3,13 @@
 // Imports modules npm. ============================================================================
 const express = require('express');
 // Local imports. ==================================================================================
-const { checkJwtController } = require('../controllers/auth/index');
-const {
-  addVideoController,
-  createPlayerController,
-  deletePlayerController,
-  getPlayerController,
-  searchVideosYoutubeController,
-  updatePlayerProfileController,
-} = require('../controllers/players/index');
+const { addVideoController } = require('../controllers/players/add.video.controller');
+const { checkJwtController } = require('../controllers/auth/check.jwt.controller');
+const { createPlayerController } = require('../controllers/players/create.player.controller');
+const { deletePlayerController } = require('../controllers/players/delete.player.controller');
+const { getPlayerController } = require('../controllers/players/get.player.controller');
+const { searchVideosYoutubeController } = require('../controllers/players/search.videos.youtube.controller');
+const { updatePlayerProfileController } = require('../controllers/players/update.player.profile.controller');
 
 
 const playerRoutes = express.Router();
@@ -25,9 +23,9 @@ playerRoutes.put('/:id', checkJwtController, updatePlayerProfileController);
 
 playerRoutes.delete('/:id', checkJwtController, deletePlayerController);
 
-playerRoutes.post('/video', checkJwtController, addVideoController);
+playerRoutes.get('/:id/youtube', checkJwtController, searchVideosYoutubeController);
 
-playerRoutes.post('/youtube', checkJwtController, searchVideosYoutubeController);
+playerRoutes.post('/:id/addVideo', checkJwtController, addVideoController);
 
 module.exports = {
   playerRoutes,

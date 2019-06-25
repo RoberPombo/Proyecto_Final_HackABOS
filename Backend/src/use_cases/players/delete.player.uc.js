@@ -1,29 +1,27 @@
 'use strict';
 
+// Local imports: use_cases/models =================================================================
+const { CreateErrorResponseModel } = require('../models/create.error.response.model');
+const { CreateResponseModel } = require('../models/create.response.model');
+// Local imports: repositories =====================================================================
+const { updatePlayerRepositorie } = require('../../repositories/players/update.player.repositorie');
 
-const deletePlayerUseCase = ({
-  CreateErrorResponseModel,
-  CreateResponseModel,
-  deletePlayerRepositorie,
-}) => async(userId, role, sport, playerId, paramPlayerId) => {
-  if (role !== 'scout' || playerId !== paramPlayerId) {
-    return CreateErrorResponseModel('Unauthorized user.', []);
+
+const deletePlayerUseCase = async(userId, role, sport, playerId, paramPlayerId) => {
+  if (role !== 'agent' || playerId !== paramPlayerId) {
+    return CreateErrorResponseModel('Unauthorized user.', 'delete.player.uc.js', {});
   }
   if (!userId || !playerId || !sport) {
-    return CreateErrorResponseModel('Unauthorized user.', []);
+    return CreateErrorResponseModel('Unauthorized user.', 'delete.player.uc.js', {});
   }
 
 
-  const updatedPlayer = await deletePlayerRepositorie(userId, playerId, sport);
-  if (updatedPlayer instanceof Error) {
-    return CreateErrorResponseModel(updatedPlayer.message, updatedPlayer);
-  }
+  const updatedPlayer = await updatePlayerRepositorie.delete(userId, playerId, sport);
   if (updatedPlayer.deletedAt > 0) {
-    return CreateErrorResponseModel('Invalid request data.', []);
+    return CreateErrorResponseModel('Invalid request data.', 'delete.player.uc.js', {});
   }
 
-
-  return CreateResponseModel('Deleted player.', []);
+  return CreateResponseModel('Deleted player.', 'delete.player.uc.js', {});
 };
 
 

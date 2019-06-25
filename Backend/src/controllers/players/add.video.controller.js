@@ -1,22 +1,29 @@
 'use strict';
 
-
-const addVideoController = addVideoUseCase => async(req, _res, next) => {
-  const playerProfile = req.body;
-  const paramPlayerId = req.params.id;
-  const {
-    userId, role, sport, playerId,
-  } = req.claims;
+// Local imports: use_cases ========================================================================
+const { addVideoUseCase } = require('../../use_cases/players/add.video.uc');
 
 
-  const response = await addVideoUseCase(
-    userId, role, sport, playerId, paramPlayerId, playerProfile,
-  );
-  if (response instanceof Error) return next(response);
+const addVideoController = async(req, _res, next) => {
+  try {
+    const videoData = req.body;
+    const paramPlayerId = req.params.id;
+    const {
+      userId, role, sport, playerId,
+    } = req.claims;
 
+    req.infoReq = { ...req.infoReq, userId };
 
-  req.response = response;
-  return next();
+    const response = await addVideoUseCase(
+      userId, role, sport, playerId, paramPlayerId, videoData,
+    );
+
+    req.response = response;
+
+    return next();
+  } catch (error) {
+    return next(error);
+  }
 };
 
 

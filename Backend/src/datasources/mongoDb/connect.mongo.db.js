@@ -3,7 +3,7 @@
 // Imports modules npm. ============================================================================
 const mongoose = require('mongoose');
 // Declared environment variables ==================================================================
-const { MONGODB_URL: mongoDbUrl } = process.env;
+const mongoDbUrl = (process.env.NODE_ENV === 'dev') ? process.env.MONGODB_URL_DEV : process.env.MONGODB_URL;
 
 
 const connectMongoDb = async() => {

@@ -1,9 +1,9 @@
-'use strict';
+// 'use strict';
 
 
-const { asyncRedisClient } = require('./connect.redis.db');
+// const { asyncRedisClient } = require('./connect.redis.db');
 
 
-module.exports = {
-  asyncRedisClient,
-};
+// module.exports = {
+//   asyncRedisClient,
+// };

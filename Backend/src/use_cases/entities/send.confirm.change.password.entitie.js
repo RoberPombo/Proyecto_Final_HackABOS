@@ -2,23 +2,20 @@
 
 // Imports modules npm. ============================================================================
 const sendgridMail = require('@sendgrid/mail');
-// Local imports. ==================================================================================
-const { languageOptions } = require('../../config');
+// Local imports: config ===========================================================================
+const { languageOptions } = require('../../config/config.api');
+const { Console } = require('../../config/config.winston');
 // Declared environment variables ==================================================================
 const {
   API_KEY_SENDGRID: apiKeySendgrid,
   URL: apiUrl,
-  URL_USER_CHANGE_PASSWORD: urlUserChangePassword,
 } = process.env;
 
 sendgridMail.setApiKey(apiKeySendgrid);
 
 
-/**
- * @type {IsendConfirmChangePasswordEntitie}
- */
-const sendConfirmChangePasswordEntitie = async(userEmail, uuid, language = 'en') => {
-  const linkActivation = `${apiUrl}${urlUserChangePassword}${uuid}`;
+const sendConfirmChangePasswordEntitie = async(userEmail, uuid, sport, language = 'en') => {
+  const linkActivation = `${apiUrl}/user/password?confirm_code=${uuid}&sport=${sport}`;
   const subject = {
     en: 'Sport Scout - Confirm password change',
     es: 'Ojeador Deportivo - Confirmar cambio de contraseña',
@@ -42,11 +39,10 @@ const sendConfirmChangePasswordEntitie = async(userEmail, uuid, language = 'en')
 
   try {
     await sendgridMail.send(msg);
-
-    return true;
-  } catch (e) {
-    return false;
+  } catch (error) {
+    Console.error(`Error: 'send.confirm.change.password.entitie.js' - ${error.message}`);
   }
+  return true;
 };
 
 module.exports = {

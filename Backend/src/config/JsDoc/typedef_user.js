@@ -109,7 +109,7 @@
  */
 // IvalidateUserDataEntitie ==========================================
 /**
- * @typedef {(payload:IinputData | IUserModel) => Promise<[]>} IvalidateUserDataEntitie
+ * @typedef {(payload:IinputData | IUserModel) => Promise<{}>} IvalidateUserDataEntitie
  */
 // IactivateUserUseCase ==============================================
 /**

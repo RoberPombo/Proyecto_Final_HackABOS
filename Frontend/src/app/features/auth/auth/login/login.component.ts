@@ -37,8 +37,9 @@ export class LoginComponent implements OnInit {
         c[k] = form.value[k][k];
         return c;
       }, {}));
+      const email = formValues.email.toLowerCase().trim();
 
-      this.authServ.login(formValues).subscribe(
+      this.authServ.login({ password: formValues.password, email }).subscribe(
         () => {
           this.userServ.getUserProfile().subscribe(
             () => this.router.navigate(['/user']),

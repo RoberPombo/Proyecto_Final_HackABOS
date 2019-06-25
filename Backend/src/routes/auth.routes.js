@@ -4,10 +4,8 @@
 // Imports modules npm. ============================================================================
 const express = require('express');
 // Local imports. ==================================================================================
-const {
-  loginController,
-  refreshTokenController,
-} = require('../controllers/auth');
+const { loginController } = require('../controllers/auth/login.controller');
+const { refreshTokenController } = require('../controllers/auth/refresh.token.controller');
 
 
 const authRoutes = express.Router();

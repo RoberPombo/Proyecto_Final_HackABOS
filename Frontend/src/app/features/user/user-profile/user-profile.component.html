@@ -21,11 +21,11 @@
         </app-autocomplete-field>
 
         <button mat-button color="primary" type="button" name="scout-button1"
-          *ngIf="userData && userData.role === 'scout'" (click)="goPlayerProfile()">
+          *ngIf="userData && userData.role === 'agent'" (click)="goPlayerProfile()">
           {{ 'user.scoutButton1' | translate }}
         </button>
         <button mat-button color="primary" type="button" name="scout-button2"
-          *ngIf="userData && userData.role === 'scout'" (click)="addVideosPlayer()">
+          *ngIf="userData && userData.role === 'agent'" (click)="addVideosPlayer()">
           {{ 'user.scoutButton2' | translate }}
         </button>
         <button mat-button color="primary" type="button" name="team-button1"

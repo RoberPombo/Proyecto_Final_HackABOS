@@ -1,34 +1,44 @@
 'use strict';
 
+// Local imports: datasources ======================================================================
+const { findUserDatasource } = require('../../datasources/mongoDb/user/find.user.data');
+// Local imports: use_cases/models =================================================================
+const { CreateErrorResponseModel } = require('../../use_cases/models/create.error.response.model');
 
-const findUserRepositorie = (findUserDatasource, option) => async(filterValue) => {
+
+const findUserRepositorie = option => async(filterValue, sport) => {
   let findedUser;
-
   try {
     if (option === 'activationCode') {
-      findedUser = await findUserDatasource.byActivationCode(filterValue);
+      findedUser = await findUserDatasource.byActivationCode(filterValue, sport);
     } else if (option === 'email') {
-      findedUser = await findUserDatasource.byEmail(filterValue);
+      findedUser = await findUserDatasource.byEmail(filterValue, sport);
     } else if (option === 'id') {
-      findedUser = await findUserDatasource.byId(filterValue);
+      findedUser = await findUserDatasource.byId(filterValue, sport);
     } else if (option === 'changePassword') {
-      findedUser = await findUserDatasource.byChangePassword(filterValue);
+      findedUser = await findUserDatasource.byChangePassword(filterValue, sport);
     }
-  } catch (e) {
-    if (e.message.includes('ObjectId failed')) {
-      return new Error('Invalid request data.');
+  } catch (error) {
+    if (error.message.includes('ObjectId failed')) {
+      throw CreateErrorResponseModel('Invalid request data.', 'find.user.repositorie.js', error);
     }
-    return new Error('Internal server error.');
+    throw CreateErrorResponseModel('Internal server error.', 'find.user.repositorie.js', error);
   }
 
   if (findedUser.length === 0) {
-    return new Error('Invalid request data.');
+    throw CreateErrorResponseModel('Invalid request data.', 'find.user.repositorie.js', findedUser);
   }
+
 
   return findedUser;
 };
 
 
 module.exports = {
-  findUserRepositorie,
+  findUserRepositorie: {
+    byActivationCode: findUserRepositorie('activationCode'),
+    byChangePassword: findUserRepositorie('changePassword'),
+    byEmail: findUserRepositorie('email'),
+    byId: findUserRepositorie('id'),
+  },
 };

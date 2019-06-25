@@ -8,7 +8,7 @@ export interface IAuthTokens {
 export interface ILoginHttpResponse {
   id: string;
   message: string;
-  data: IAuthTokens[];
+  data: IAuthTokens;
 }
 
 export interface IRegisterHttpResponse {
@@ -56,9 +56,9 @@ export interface IUserProfileHttpResponse {
 
 export interface IVideosModel {
   videoId: string;
-  likes: number;
-  views: number;
-  publishAt: number;
+  likeCount: string;
+  viewCount: number;
+  publishedAt: string;
 }
 
 
@@ -96,7 +96,7 @@ export interface IYoutubeVideosModel {
   likeCount: string;
   publishedAt: string;
   title: string;
-  viewCounts: number;
+  viewCount: number;
   thumbnails: {
     default: { url: string };
     standard: { url: string };
@@ -108,8 +108,12 @@ export interface IYoutubeVideosModel {
 
 
 export interface IYoutubeHttpResponse {
-  nextPageToken: string;
-  prevPageToken?: string;
-  totalResults: number;
-  items: IYoutubeVideosModel[];
+  id: string;
+  message: string;
+  data: {
+    nextPageToken: string;
+    prevPageToken?: string;
+    totalResults: number;
+    items: IYoutubeVideosModel[];
+  }
 }

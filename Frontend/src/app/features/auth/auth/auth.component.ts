@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 // Translate =================================================================
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/core/services/user.service';
 // Material Angular  =========================================================
 
 
@@ -19,8 +21,6 @@ export class AuthComponent implements OnInit {
   public registerClass: string;
   public liClass: string;
 
-  constructor() {
-  }
 
   ngOnInit() {
     this.changeContainer(true);

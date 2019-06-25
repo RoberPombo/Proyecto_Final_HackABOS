@@ -1,39 +1,29 @@
 'use strict';
 
-
-const createPlayerUseCase = ({
-  CreateErrorResponseModel,
-  CreateResponseModel,
-  CreatePlayerModel,
-  findUserById,
-  savePlayerRepositorie,
-  validatePlayerDataEntitie,
-}) => async(userId, role, inputData) => {
-  if (role !== 'user') return CreateErrorResponseModel('Unauthorized user.', []);
-
-
-  const validatedInputData = await validatePlayerDataEntitie(inputData);
-  if (validatedInputData.length > 0) {
-    return CreateErrorResponseModel('Wrong input data.', validatedInputData);
-  }
+// Local imports: use_cases/entities ===============================================================
+const { validatePlayerDataEntitie } = require('../entities/validate.player.data.entitie');
+// Local imports: use_cases/models =================================================================
+const { CreateErrorResponseModel } = require('../models/create.error.response.model');
+const { CreateResponseModel } = require('../models/create.response.model');
+const { CreatePlayerModel } = require('../models/create.player.model');
+// Local imports: repositories =====================================================================
+const { savePlayerRepositorie } = require('../../repositories/players/save.player.repositorie');
+const { updateUserRepositorie } = require('../../repositories/user/update.user.repositorie');
 
 
-  const findedUser = await findUserById(userId);
-  if (findedUser instanceof Error) return CreateErrorResponseModel(findedUser.message, findedUser);
-  if (findedUser[0].role !== 'user') return CreateErrorResponseModel('Unauthorized user.', []);
+const createPlayerUseCase = async(userId, role, sport, inputData) => {
+  if (role !== 'user') throw CreateErrorResponseModel('Forbidden access.', 'create.player.uc.js', {});
 
+  const requiredFields = ['fullName', 'birthdate', 'nationality', 'height', 'weight', 'team', 'preferredFoot', 'preferredPositions'];
+  const validInputData = await validatePlayerDataEntitie(inputData, requiredFields);
 
-  const newPlayer = CreatePlayerModel(userId, inputData);
-  if (newPlayer instanceof Error) return CreateErrorResponseModel(newPlayer.message, newPlayer);
-
+  const newPlayer = CreatePlayerModel(userId, sport, validInputData);
 
   const savedPlayer = await savePlayerRepositorie(newPlayer);
-  if (savedPlayer instanceof Error) {
-    return CreateErrorResponseModel(savedPlayer.message, savedPlayer);
-  }
 
+  await updateUserRepositorie.addPlayer(userId, sport, savedPlayer);
 
-  return CreateResponseModel('Created player.', [savedPlayer]);
+  return CreateResponseModel('Created player.', 'create.player.uc.js', savedPlayer);
 };
 
 

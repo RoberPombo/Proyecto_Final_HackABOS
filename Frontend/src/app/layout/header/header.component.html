@@ -12,7 +12,7 @@
           <span>{{ 'header.user' | translate }}</span>
         </button>
         <button mat-menu-item (click)="goPlayerProfile()"
-          *ngIf="userServ.userProfile && userServ.userProfile.role === 'scout'">
+          *ngIf="userServ.userProfile && userServ.userProfile.role === 'agent'">
           <span>{{ 'header.player' | translate }}</span>
         </button>
         <button mat-menu-item (click)="searchPlayers()"

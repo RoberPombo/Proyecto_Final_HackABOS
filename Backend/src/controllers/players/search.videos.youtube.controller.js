@@ -1,19 +1,25 @@
 'use strict';
 
-
-const searchVideosYoutubeController = seachVideosYoutubeUseCase => async(req, res, next) => {
-  const filters = req.body;
-  const {
-    userId, role, sport, playerId,
-  } = req.claims;
+// Local imports: use_cases ========================================================================
+const { searchVideosYoutubeUseCase } = require('../../use_cases/players/search.videos.youtube.uc');
 
 
-  const response = await seachVideosYoutubeUseCase(userId, role, sport, playerId, filters);
-  if (response instanceof Error) return next(response);
+const searchVideosYoutubeController = async(req, res, next) => {
+  try {
+    const paramPlayerId = req.params.id;
+    const filters = req.query;
+    const { userId, role, playerId } = req.claims;
 
-  return res.send(response);
-  // req.response = response;
-  // return next();
+    req.infoReq = { ...req.infoReq, userId };
+
+    const response = await searchVideosYoutubeUseCase(role, playerId, paramPlayerId, filters);
+
+    req.response = response;
+
+    return next();
+  } catch (error) {
+    return next(error);
+  }
 };
 
 

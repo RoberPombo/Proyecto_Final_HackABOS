@@ -1,18 +1,22 @@
 'use strict';
 
-
-const { URL_FRONT:urlFront } = process.env;
-
-
-const activateUserController = activateUserUseCase => async(req, res) => {
-  const activationCode = req.query.activation_code;
+// Local imports: use_cases ========================================================================
+const { activateUserUseCase } = require('../../use_cases/user/activate.user.uc');
 
 
-  const response = await activateUserUseCase(activationCode);
-  if (response instanceof Error) return next(response);
+const activateUserController = async(req, res, next) => {
+  const { activation_code: activationCode, sport } = req.query;
 
+  try {
+    const response = await activateUserUseCase(activationCode, sport);
 
-  return res.redirect(302, urlFront);
+    req.infoReq = { ...req.infoReq, userId: response.data._id };
+    req.response = response;
+
+    return next();
+  } catch (error) {
+    return next(error);
+  }
 };
 
 

@@ -1,16 +1,24 @@
 'use strict';
 
+// Local imports: use_cases ========================================================================
+const { sendEmailActivationUseCase } = require('../../use_cases/user/send.email.activation.uc');
 
-const sendEmailActivationController = sendEmailActivationUseCase => async(req, res, next) => {
-  const { email } = req.body;
 
-  const response = await sendEmailActivationUseCase(email);
+const sendEmailActivationController = async(req, res, next) => {
+  const { email, sport } = req.body;
 
-  if (response instanceof Error) return next(response);
+  try {
+    const response = await sendEmailActivationUseCase(email, sport);
 
-  req.response = response;
+    req.infoReq = { ...req.infoReq, userId: response.data._id };
+    req.response = response;
 
-  return next();
+    return next();
+  } catch (error) {
+    req.infoReq = { ...req.infoReq, userId: email };
+
+    return next(error);
+  }
 };
 
 

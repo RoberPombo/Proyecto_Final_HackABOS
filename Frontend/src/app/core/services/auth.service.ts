@@ -24,7 +24,10 @@ export class AuthService {
     private playerServ: PlayerService,
     private userServ: UserService,
   ) {
-    this.authTokens = JSON.parse(localStorage.getItem('auth'));
+    const authTokensLocalStorage = JSON.parse(localStorage.getItem('auth'));
+    if (authTokensLocalStorage && authTokensLocalStorage.jwtToken) {
+      this.authTokens = authTokensLocalStorage;
+    }
   }
 
 
@@ -34,9 +37,9 @@ export class AuthService {
     return this.http.post<ILoginHttpResponse>(loginUri, {
       email,
       password,
+      sport: 'soccer',
     }).pipe(tap(response => {
-      this.rejectRefreshToken = false;
-      this.authTokens = response.data[0];
+      this.authTokens = response.data;
       localStorage.setItem('auth', JSON.stringify(this.authTokens));
     }));
   }
@@ -45,7 +48,6 @@ export class AuthService {
   logout() {
     localStorage.removeItem('auth');
     this.authTokens = null;
-    this.rejectRefreshToken = false;
     this.playerServ.playerProfile = undefined;
     this.userServ.userProfile = undefined;
     this.router.navigate(['/auth']);
@@ -53,14 +55,14 @@ export class AuthService {
 
 
   refreshToken() {
-    this.rejectRefreshToken = true;
+
     return this.http.get<ILoginHttpResponse>(`${environment.api.uri}/refreshToken`)
       .pipe(tap(response => {
-        this.rejectRefreshToken = false;
         this.authTokens = response.data[0];
-        localStorage.setItem('auth', JSON.stringify(this.authTokens));
-      },
-        () => this.rejectRefreshToken = true,
-      ));
+        this.rejectRefreshToken = false;
+        if (this.authTokens && this.authTokens.jwtToken) {
+          localStorage.setItem('auth', JSON.stringify(this.authTokens));
+        }
+      }));
   }
 }

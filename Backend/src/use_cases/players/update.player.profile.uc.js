@@ -1,38 +1,29 @@
 'use strict';
 
+// Local imports: use_cases/entities ===============================================================
+const { validatePlayerDataEntitie } = require('../entities/validate.player.data.entitie');
+// Local imports: use_cases/models =================================================================
+const { CreateErrorResponseModel } = require('../models/create.error.response.model');
+const { CreateResponseModel } = require('../models/create.response.model');
+// Local imports: repositories =====================================================================
+const { updatePlayerRepositorie } = require('../../repositories/players/update.player.repositorie');
 
-const updatePlayerProfileUseCase = ({
-  validatePlayerDataEntitie,
-  CreateErrorResponseModel,
-  CreateResponseModel,
-  findPlayerById,
-  updatePlayerRepositorie,
-}) => async(userId, role, sport, playerId, paramPlayerId, playerProfile) => {
-  if (role !== 'scout' || playerId !== paramPlayerId) {
-    return CreateErrorResponseModel('Unauthorized user.', []);
+
+const updatePlayerProfileUseCase = async(
+  userId, role, sport, playerId, paramPlayerId, playerProfile
+) => {
+  if (role !== 'agent' || playerId !== paramPlayerId) {
+    throw CreateErrorResponseModel('Forbidden access.', 'update.player.profile.uc.js', {});
   }
-  if (!userId || !playerId || !sport) return CreateErrorResponseModel('Unauthorized user.', []);
+  if (!userId || !sport) throw CreateErrorResponseModel('Unauthorized user.', 'update.player.profile.uc.js', {});
+
+  const requiredFields = ['fullName', 'birthdate', 'nationality', 'height', 'weight', 'team', 'preferredFoot', 'preferredPositions'];
+  const validatedPlayerProfile = await validatePlayerDataEntitie(playerProfile, requiredFields);
+
+  const updatedPlayer = await updatePlayerRepositorie.profile(userId, playerId, sport, validatedPlayerProfile);
 
 
-  const validatedPlayerProfile = await validatePlayerDataEntitie(playerProfile);
-  if (validatedPlayerProfile.length > 0) {
-    return CreateErrorResponseModel('Wrong input data.', validatedPlayerProfile);
-  }
-
-
-  // const findedPlayer = await findPlayerById(playerId);
-  // if (findedPlayer instanceof Error) {
-  //   return CreateErrorResponseModel(findedUser.message, findedUser);
-  // }
-
-
-  const updatedPlayer = await updatePlayerRepositorie(userId, playerId, sport, playerProfile);
-  if (updatedPlayer instanceof Error) {
-    return CreateErrorResponseModel(updatedPlayer.message, updatedPlayer);
-  }
-
-
-  return CreateResponseModel('Updated player.', [updatedPlayer]);
+  return CreateResponseModel('Updated player.', 'update.player.profile.uc.js', updatedPlayer);
 };
 
 

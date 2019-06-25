@@ -30,24 +30,21 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError(error => {
         if (
-          error.status === 401 && this.authService.rejectRefreshToken === false &&
+          error.status === 401 && error.error.message === 'Unauthorized user.' &&
           this.authService.authTokens && this.authService.authTokens.refreshToken
         ) {
-          console.log('refreshToken');
+          this.authService.rejectRefreshToken = true;
           this.authService.refreshToken().subscribe();
         } else if (
           error.url.indexOf('/auth') === -1 &&
-          this.router.routerState.snapshot.url !== '/auth' &&
-          error.status === 401
+          error.status === 401 && error.error.message === 'Unauthorized refresh token.'
         ) {
-          console.log('logout');
+          this.snackServ.openSnackbar(error.error.message, 'red-snackbar', 3);
           this.authService.logout();
         } else {
-          console.log('snackbar');
           this.snackServ.openSnackbar(error.error.message, 'red-snackbar', 3);
+          // this.router.navigate(['/user']);
         }
-        console.log('error')
-        this.router.navigate(['/user']);
         return throwError(error);
       })
     );

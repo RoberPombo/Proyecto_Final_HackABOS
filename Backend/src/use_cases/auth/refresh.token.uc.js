@@ -1,18 +1,25 @@
 'use strict';
 
+// Local imports: use_cases/entities ===============================================================
+const { createTokensEntitie } = require('../entities/create.tokens.entitie');
+// Local imports: use_cases/models =================================================================
+const { CreateErrorResponseModel } = require('../models/create.error.response.model');
+const { CreateResponseModel } = require('../models/create.response.model');
+// Local imports: repositories =====================================================================
+const { getRefreshTokenRepositorie } = require('../../repositories/auth/get.refresh.token.repositorie');
 
-const refreshTokenUseCase = ({
-  CreateErrorResponseModel,
-  CreateResponseModel,
-  createTokensEntitie,
-  getRefreshTokenRepositorie,
-}) => async(refreshToken, ip, userAgent) => {
+
+const refreshTokenUseCase = async(refreshToken, ip, userAgent) => {
+  if (!refreshToken) {
+    throw CreateErrorResponseModel('Unauthorized refresh token.', 'refresh.token.uc.js', {});
+  }
+
   const findedRefreshToken = await getRefreshTokenRepositorie(refreshToken);
   if (!findedRefreshToken || findedRefreshToken.deletedAt > 0) {
-    return CreateErrorResponseModel('Unauthorized user.', []);
+    throw CreateErrorResponseModel('Unauthorized refresh token.', 'refresh.token.uc.js', {});
   }
   if (findedRefreshToken.ip !== ip || findedRefreshToken.userAgent !== userAgent) {
-    return CreateErrorResponseModel('Unauthorized user.', []);
+    throw CreateErrorResponseModel('Unauthorized refresh token.', 'refresh.token.uc.js', {});
   }
 
 
@@ -25,12 +32,16 @@ const refreshTokenUseCase = ({
     playerId: findedRefreshToken.playerId,
   });
 
-  return CreateResponseModel('User is authenticated.', [{
-    jwtToken,
-    jwtExpiresIn,
-    refreshToken,
-    refreshExpiresIn,
-  }]);
+
+  return {
+    response: CreateResponseModel('User authentication is refreshed.', 'refresh.token.uc.js', {
+      jwtToken,
+      jwtExpiresIn,
+      refreshToken,
+      refreshExpiresIn,
+    }),
+    userId: findedRefreshToken.userId,
+  };
 };
 
 

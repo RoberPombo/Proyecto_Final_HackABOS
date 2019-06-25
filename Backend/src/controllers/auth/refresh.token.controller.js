@@ -1,18 +1,24 @@
 'use strict';
 
+// Local imports: use_cases ========================================================================
+const { refreshTokenUseCase } = require('../../use_cases/auth/refresh.token.uc');
 
-const refreshTokenController = refreshTokenUseCase => async(req, _res, next) => {
+
+const refreshTokenController = async(req, _res, next) => {
   const { ip } = req;
   const userAgent = req.headers['user-agent'];
   const refreshToken = req.headers['x-refreshtoken'];
 
+  try {
+    const { response, userId } = await refreshTokenUseCase(refreshToken, ip, userAgent);
 
-  const response = await refreshTokenUseCase(refreshToken, ip, userAgent);
-  if (response instanceof Error) return next(response);
+    req.infoReq = { ...req.infoReq, userId };
+    req.response = response;
 
-
-  req.response = response;
-  return next();
+    return next();
+  } catch (error) {
+    return next(error);
+  }
 };
 
 

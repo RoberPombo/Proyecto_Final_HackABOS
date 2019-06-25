@@ -2,7 +2,6 @@
   position: fixed;
   z-index: 100;
   top: 0;
-  height: 0;
   width: 100vw;
   height: 100vh;
   background-color: rgba(white, 0.6);
@@ -10,4 +9,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  img {
+    width: 50%;
+  }
 }

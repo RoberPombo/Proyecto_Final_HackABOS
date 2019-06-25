@@ -1,34 +1,27 @@
 'use strict';
 
+// Local imports: use_cases/entities ===============================================================
+const { createUuidV4Entitie } = require('../entities/create.uuid.v4.entitie');
+const { sendEmailActivationEntitie } = require('../entities/send.email.activation.entitie');
+const { validateUserDataEntitie } = require('../entities/validate.user.data.entitie');
+// Local imports: use_cases/models =================================================================
+const { CreateErrorResponseModel } = require('../models/create.error.response.model');
+const { CreateResponseModel } = require('../models/create.response.model');
+// Local imports: repositories =====================================================================
+const { findUserRepositorie } = require('../../repositories/user/find.user.repositorie');
+const { updateUserRepositorie } = require('../../repositories/user/update.user.repositorie');
 
-/**
- *
- * @param {Object} object
- * @param {IcreateUuidV4Entitie} object.createUuidV4Entitie
- * @param {IsendEmailActivationEntitie} object.sendEmailActivationEntitie
- * @param {ICreateErrorResponseModel} object.CreateErrorResponseModel
- * @param {ICreateResponseModel} object.CreateResponseModel
- * @param {IactivateUser} object.activateUser
- * @param {IaddActivationCode} object.addActivationCode
- * @param {IfindUserByActivationCode} object.findUserByActivationCode
- *
- * @returns {IactivateUserUseCase}
- *
- */
-const activateUserUseCase = ({
-  createUuidV4Entitie,
-  sendEmailActivationEntitie,
-  CreateErrorResponseModel,
-  CreateResponseModel,
-  activateUser,
-  addActivationCode,
-  findUserByActivationCode,
-}) => async(activationCode) => {
-  if (!activationCode) return CreateErrorResponseModel('Invalid request data.', []);
 
-  const findedUser = await findUserByActivationCode(activationCode);
-  if (findedUser instanceof Error) return CreateErrorResponseModel(findedUser.message, findedUser);
-  if (findedUser[0].activatedAt > 0) return CreateErrorResponseModel('Already active user.', []);
+const activateUserUseCase = async(activationCode, sport) => {
+  const requiredFields = ['sport', 'activationCode'];
+  const validInputData = await validateUserDataEntitie(
+    { sport, activationCode: [{ uuid: activationCode }] }, requiredFields
+  );
+
+  const findedUser = await findUserRepositorie.byActivationCode(
+    validInputData.activationCode[0].uuid, sport
+  );
+  if (findedUser[0].activatedAt > 0) throw CreateErrorResponseModel('Already active user.', 'activate.user.uc.js', {});
 
   const dateActivationCode = findedUser[0].activationCode.filter((code) => {
     if (code.uuid === activationCode) return true;
@@ -38,26 +31,22 @@ const activateUserUseCase = ({
   const difDays = (Date.now() - dateActivationCode[0].sendAt) / (1000 * 60 * 60 * 24);
   if (difDays >= 1) {
     const newActivationCode = createUuidV4Entitie();
-    const updatedUser = await addActivationCode(findedUser[0]._id, newActivationCode);
-    if (updatedUser instanceof Error) {
-      return CreateErrorResponseModel(updatedUser.message, updatedUser);
-    }
+    await updateUserRepositorie.addActivationCode(findedUser[0]._id, findedUser[0].sport, newActivationCode);
 
     await sendEmailActivationEntitie(
       findedUser[0].email,
       newActivationCode,
+      findedUser[0].sport,
       findedUser[0].language,
     );
 
-    return CreateErrorResponseModel('Expired activation code.', []);
+    throw CreateErrorResponseModel('Expired activation code.', 'activate.user.uc.js', {});
   }
 
-  const activatedUser = await activateUser(findedUser[0]._id);
-  if (activatedUser instanceof Error) {
-    return CreateErrorResponseModel(activatedUser.message, activatedUser);
-  }
+  const activatedUser = await updateUserRepositorie.activate(findedUser[0]._id, findedUser[0].sport);
 
-  return CreateResponseModel('Activated user.', []);
+
+  return CreateResponseModel('Activated user.', 'activate.user.uc.js', activatedUser);
 };
 
 

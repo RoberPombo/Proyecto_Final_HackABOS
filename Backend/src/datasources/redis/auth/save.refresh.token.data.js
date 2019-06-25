@@ -1,13 +1,18 @@
 'use strict';
 
+// Local imports: this module ======================================================================
+const { asyncRedisClient } = require('../connect.redis.db');
+// Declared environment variables ==================================================================
+const { NODE_ENV: nodeEnv } = process.env;
 
-const saveRefreshTokenDatasource = asyncRedisClient => async(
+
+const saveRefreshTokenDatasource = async(
   uuid,
   userId,
   userEmail,
   role,
   sport,
-  playerId,
+  playerId = '',
   ip,
   userAgent,
   createdAt,
@@ -26,9 +31,13 @@ const saveRefreshTokenDatasource = asyncRedisClient => async(
     createdAt,
     deletedAt,
   });
-  // await asyncRedisClient.select(1);
+
+
+  if (nodeEnv === 'dev') await asyncRedisClient.select(1);
   await asyncRedisClient.set(uuid, savedRefreshToken);
   await asyncRedisClient.expire(uuid, expiresIn);
+
+
   return true;
 };
 

@@ -1,50 +1,55 @@
 'use strict';
 
 
-/**
- * @type {ICreateErrorResponseModel}
-*/
-const CreateErrorResponseModel = (message, error) => {
+const CreateErrorResponseModel = (message, file, error) => {
   const optionsErrorsHttp = [
     {
-      title: 'InternalServerError',
-      message: 'Internal server error.',
-      data: [],
+      title: 'AccessError',
+      message: 'Forbidden access.',
     },
     {
       title: 'ActivatedUserError',
       message: 'Already active user.',
-      data: [],
-    },
-    {
-      title: 'CreateUserError',
-      message: 'User already exists in database.',
-      data: [],
-    },
-    {
-      title: 'CreatePlayerError',
-      message: 'Player already exists in database.',
-      data: [],
-    },
-    {
-      title: 'ExpiredCodeError',
-      message: 'Expired activation code.',
-      data: [],
-    },
-    {
-      title: 'RequestDataError',
-      message: 'Invalid request data.',
-      data: [],
     },
     {
       title: 'AuthenticateError',
       message: 'Unauthorized user.',
-      data: [],
+    },
+    {
+      title: 'ChangePasswordError',
+      message: 'Confirmation email expired.',
+    },
+    {
+      title: 'CreateUserError',
+      message: 'User already exists in database.',
+    },
+    {
+      title: 'CreatePlayerError',
+      message: 'Player already exists in database.',
+    },
+    {
+      title: 'ExpiredCodeError',
+      message: 'Expired activation code.',
+    },
+    {
+      title: 'InternalServerError',
+      message: 'Internal server error.',
+    },
+    {
+      title: 'RefreshAuthenticateError',
+      message: 'Unauthorized refresh token.',
+    },
+    {
+      title: 'RequestDataError',
+      message: 'Invalid request data.',
+    },
+    {
+      title: 'UserExistError',
+      message: 'User does not exist.',
     },
     {
       title: 'ValidateDataError',
       message: 'Wrong input data.',
-      data: error,
     },
   ];
 
@@ -53,16 +58,23 @@ const CreateErrorResponseModel = (message, error) => {
     constructor(data) {
       super(data.message);
       this.title = data.title;
+      this.file = data.file;
       this.data = data.data;
     }
   }
 
 
-  const optionHttp = optionsErrorsHttp.filter(option => option.message === message);
+  const optionHttp = optionsErrorsHttp.find(option => option.message === message);
 
-  const optRes = (optionHttp.length === 0) ? optionsErrorsHttp[0] : optionHttp[0];
+  const { title } = (optionHttp) || optionsErrorsHttp[0];
 
-  const errorResponse = new ErrorResponse(optRes);
+
+  const errorResponse = new ErrorResponse({
+    title,
+    message,
+    file,
+    data: error,
+  });
 
   return errorResponse;
 };

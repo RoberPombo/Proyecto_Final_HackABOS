@@ -2,23 +2,20 @@
 
 // Imports modules npm. ============================================================================
 const sendgridMail = require('@sendgrid/mail');
-// Local imports. ==================================================================================
-const { languageOptions } = require('../../config');
+// Local imports: config ===========================================================================
+const { languageOptions } = require('../../config/config.api');
+const { Console } = require('../../config/config.winston');
 // Declared environment variables ==================================================================
 const {
   API_KEY_SENDGRID: apiKeySendgrid,
   URL: apiUrl,
-  URL_USER_ACTIVATION: urlUserActivation,
 } = process.env;
 
 sendgridMail.setApiKey(apiKeySendgrid);
 
 
-/**
- * @type {IsendEmailActivationEntitie}
- */
-const sendEmailActivationEntitie = async(userEmail, activationCode, language = 'en') => {
-  const linkActivation = `${apiUrl}${urlUserActivation}${activationCode}`;
+const sendEmailActivationEntitie = async(userEmail, activationCode, sport, language = 'en') => {
+  const linkActivation = `${apiUrl}/user/activation?activation_code=${activationCode}&sport=${sport}`;
 
   const subject = {
     en: 'Welcom to Sport Scout App',
@@ -44,11 +41,10 @@ const sendEmailActivationEntitie = async(userEmail, activationCode, language = '
 
   try {
     await sendgridMail.send(msg);
-
-    return true;
-  } catch (e) {
-    return false;
+  } catch (error) {
+    Console.error(`Error: 'send.email.activation.entitie.js' - ${error.message}`);
   }
+  return true;
 };
 
 

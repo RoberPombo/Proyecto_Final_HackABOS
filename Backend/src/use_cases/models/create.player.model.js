@@ -1,18 +1,17 @@
 'use strict';
 
 
-const CreatePlayerModel = (userId, inputData) => ({
+const CreatePlayerModel = (userId, sport, inputData) => ({
   userId,
   fullName: inputData.fullName,
   birthdate: new Date(inputData.birthdate).getTime(),
   nationality: inputData.nationality,
   height: inputData.height,
   weight: inputData.weight,
-  sport: inputData.sport,
+  sport,
   team: inputData.team,
   preferredFoot: inputData.preferredFoot,
   preferredPositions: inputData.preferredPositions,
-  videos: [],
   createdAt: Date.now(),
   modifiedAt: 0,
   deletedAt: 0,

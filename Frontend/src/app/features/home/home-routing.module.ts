@@ -13,7 +13,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'players/youtube',
+        path: 'players/:id/youtube',
         loadChildren: () => import('../youtube/youtube.module').then(mod => mod.YoutubeModule),
       },
       {

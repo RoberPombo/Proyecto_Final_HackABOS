@@ -1,11 +1,14 @@
 'use strict';
 
+// Local imports: this module ======================================================================
+const { getUpdateProfileDatasource } = require('./get.update.profile.data');
+const { asyncRedisClient } = require('../connect.redis.db');
+// Declared environment variables ==================================================================
+const { NODE_ENV: nodeEnv } = process.env;
 
-const getRefreshTokenDatasource = (
-  asyncRedisClient,
-  getUpdateProfileDatasource,
-) => async(uuid) => {
-  // await asyncRedisClient.select(1);
+
+const getRefreshTokenDatasource = async(uuid) => {
+  if (nodeEnv === 'dev') await asyncRedisClient.select(1);
   const refreshToken = JSON.parse(await asyncRedisClient.get(uuid));
 
   const getProfile = await getUpdateProfileDatasource(refreshToken.userId);

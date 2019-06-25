@@ -1,24 +1,25 @@
 'use strict';
 
+// Local imports: use_cases/entities ===============================================================
+const { validatePlayerDataEntitie } = require('../entities/validate.player.data.entitie');
+// Local imports: use_cases/models =================================================================
+const { CreateErrorResponseModel } = require('../models/create.error.response.model');
+const { CreateResponseModel } = require('../models/create.response.model');
+// Local imports: repositories =====================================================================
+const { findPlayerRepositorie } = require('../../repositories/players/find.player.repositorie');
 
-const getPlayersUseCase = ({
-  CreateErrorResponseModel,
-  CreateResponseModel,
-  findPlayerById,
-}) => async(userId, role, sport, playerId, paramPlayerId) => {
+
+const getPlayersUseCase = async(role, sport, playerId, paramPlayerId) => {
   if (role !== 'team' && playerId !== paramPlayerId) {
-    return CreateErrorResponseModel('Unauthorized user.', []);
-  }
-  if (!userId || !playerId || !sport) return CreateErrorResponseModel('Unauthorized user.', []);
-
-
-  const findedPlayer = await findPlayerById(playerId, sport);
-  if (findedPlayer instanceof Error) {
-    return CreateErrorResponseModel(findedPlayer.message, findedPlayer);
+    throw CreateErrorResponseModel('Unauthorized user.', 'get.player.uc.js', {});
   }
 
+  const requiredFields = ['_id'];
+  const validId = await validatePlayerDataEntitie({ _id: paramPlayerId }, requiredFields);
 
-  return CreateResponseModel('Sent player profile.', findedPlayer);
+  const findedPlayer = await findPlayerRepositorie.byId(validId, sport);
+
+  return CreateResponseModel('Sent player profile.', 'get.players.uc.js', findedPlayer);
 };
 
 

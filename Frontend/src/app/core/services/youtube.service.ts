@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
 import { IYoutubeVideosModel, IYoutubeHttpResponse } from '../core.models';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +15,17 @@ export class YoutubeService {
   nextPage: string;
   totalResults: number;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userServ: UserService) { }
 
   searchVideos(filter) {
-    return this.http.post<IYoutubeHttpResponse>(`${environment.api.uri}/players/youtube`, {
-      filter,
-    }).pipe(tap(
+    return this.http.get<IYoutubeHttpResponse>(
+      `${environment.api.uri}/players/${this.userServ.userProfile.agentOf.playerId}/youtube?filter=${filter}`
+    ).pipe(tap(
       res => {
-        this.nextPage = res.nextPageToken;
-        this.prevPage = res.prevPageToken || '';
-        this.totalResults = res.totalResults;
-        this.videos = res.items;
+        this.nextPage = res.data.nextPageToken;
+        this.prevPage = res.data.prevPageToken || '';
+        this.totalResults = res.data.totalResults;
+        this.videos = res.data.items;
       }
     ));
   }

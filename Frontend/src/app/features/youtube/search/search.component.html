@@ -14,28 +14,30 @@
 
 
 
-<section class="content" *ngFor="let video of videos">
+<section class="content">
+  <ng-container *ngFor="let video of videos">
 
-  <mat-card class="complete-card">
-    <mat-card-header class="header-card">
-      <mat-card-title><small>{{video.title}}</small></mat-card-title>
-      <mat-card-subtitle>
-        <span><i class="material-icons">
-            visibility </i>{{video.viewCount | number }}</span>
-        <span><i class="material-icons">
-            thumb_up </i>{{video.likeCount}}</span>
-      </mat-card-subtitle>
-    </mat-card-header>
-    <div class="embed-container">
-      <iframe [src]='getSantizeUrl(video.id)' frameborder="0" allowfullscreen></iframe>
-    </div>
+    <mat-card class="complete-card">
+      <mat-card-header class="header-card">
+        <mat-card-title><small>{{video.title}}</small></mat-card-title>
+        <mat-card-subtitle>
+          <span><i class="material-icons">
+              visibility </i>{{video.viewCount | number }}</span>
+          <span><i class="material-icons">
+              thumb_up </i>{{video.likeCount}}</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <div class="embed-container">
+        <iframe [src]='getSantizeUrl(video.id)' frameborder="0" allowfullscreen></iframe>
+      </div>
 
-    <mat-card-actions>
-      <a><small>{{ video.publishedAt | date }}</small></a>
-      <button mat-button color="primary" type="button" (click)="addVideo(video)">
-        {{ 'youtube.add' | translate }}
-      </button>
-    </mat-card-actions>
-  </mat-card>
+      <mat-card-actions>
+        <a><small>{{ video.publishedAt | date }}</small></a>
+        <button mat-button color="primary" type="button" (click)="addVideo(video)">
+          {{ 'youtube.add' | translate }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
 
+  </ng-container>
 </section>

@@ -2,28 +2,29 @@
 
 // Imports modules npm. ============================================================================
 const express = require('express');
-// Local imports. ==================================================================================
-const { checkJwtController } = require('../controllers/auth');
-const {
-  activateUserController,
-  changeUserPasswordController,
-  confirmChangeUserPasswordController,
-  deleteUserController,
-  getProfileController,
-  createUserController,
-  sendEmailActivationController,
-  updateProfileController,
-} = require('../controllers/user');
+// Local imports: this module ======================================================================
+const { activateUserController } = require('../controllers/user/activate.user.controller');
+const { changeUserPasswordController } = require('../controllers/user/change.user.password.controller');
+const { checkJwtController } = require('../controllers/auth/check.jwt.controller');
+const { confirmChangeUserPasswordController } = require('../controllers/user/confirm.change.user.password.controller');
+const { createUserController } = require('../controllers/user/create.user.controller');
+const { deleteUserController } = require('../controllers/user/delete.user.controller');
+const { getUserProfileController } = require('../controllers/user/get.user.controller');
+const { sendEmailActivationController } = require('../controllers/user/send.email.activation.controller');
+const { updateUserProfileController } = require('../controllers/user/update.user.controller');
+
+
+// const {} = require('../controllers/user');
 
 
 const userRoutes = express.Router();
 
 
-userRoutes.get('/', checkJwtController, getProfileController);
+userRoutes.get('/', checkJwtController, getUserProfileController);
 
 userRoutes.post('/', createUserController);
 
-userRoutes.put('/', checkJwtController, updateProfileController);
+userRoutes.put('/', checkJwtController, updateUserProfileController);
 
 userRoutes.delete('/', checkJwtController, deleteUserController);
 

@@ -1,34 +1,36 @@
 'use strict';
 
+// Local imports: use_cases/models =================================================================
+const { CreateErrorResponseModel } = require('../models/create.error.response.model');
+const { CreateResponseModel } = require('../models/create.response.model');
+const { validateUserDataEntitie } = require('../entities/validate.user.data.entitie');
+// Local imports: repositories =====================================================================
+const { findUserRepositorie } = require('../../repositories/user/find.user.repositorie');
+const { updateUserRepositorie } = require('../../repositories/user/update.user.repositorie');
 
-const confirmChangeUserPasswordUseCase = ({
-  CreateErrorResponseModel,
-  CreateResponseModel,
-  confirmChangeUserPasswordRepositorie,
-  findUserByChangePassword,
-}) => async(confirmCode) => {
-  if (!confirmCode) return CreateErrorResponseModel('Invalid request data.', []);
 
+const confirmChangeUserPasswordUseCase = async(confirmCode, sport) => {
+  const requiredFields = ['sport', 'changePassword'];
+  const validInputData = await validateUserDataEntitie(
+    { sport, changePassword: { uuid: confirmCode } }, requiredFields
+  );
 
-  const findedUser = await findUserByChangePassword(confirmCode);
-  if (findedUser instanceof Error) return CreateErrorResponseModel(findedUser.message, findedUser);
-
+  const findedUser = await findUserRepositorie.byChangePassword(
+    validInputData.changePassword.uuid, validInputData.sport
+  );
 
   const dateConfirmCode = findedUser[0].changePassword.sentAt;
   const difDays = (Date.now() - dateConfirmCode) / (1000 * 60 * 60 * 24);
-  if (difDays >= 1) return CreateErrorResponseModel('Confirmation email expired.', []);
+  if (difDays >= 1) throw CreateErrorResponseModel('Confirmation email expired.', 'confirm.change.user.password.uc.js', []);
 
 
-  const updatedUser = await confirmChangeUserPasswordRepositorie(
-    findedUser[0]._id,
+  const updatedUser = await updateUserRepositorie.confirmChangePassword(
+    findedUser[0]._id, findedUser[0].sport,
     { password: findedUser[0].changePassword.password },
   );
-  if (updatedUser instanceof Error) {
-    return CreateErrorResponseModel(updatedUser.message, updatedUser);
-  }
 
 
-  return CreateResponseModel('Password changed.', []);
+  return CreateResponseModel('Password changed.', 'confirm.change.user.password.uc.js', updatedUser);
 };
 
 

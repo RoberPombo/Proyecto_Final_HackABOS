@@ -1,7 +1,12 @@
 'use strict';
 
+// Local imports: this module ======================================================================
+const { CreateUserModelData } = require('./user.model.data');
+// Local imports: config ===========================================================================
+const { Console } = require('../../../config/config.winston');
 
-const cleanDatasource = (UserModelData, option) => async(userId) => {
+
+const cleanDatasource = option => async(userId, sport) => {
   const filter = {
     _id: userId,
   };
@@ -23,14 +28,20 @@ const cleanDatasource = (UserModelData, option) => async(userId) => {
   }
 
   try {
+    const UserModelData = CreateUserModelData(sport);
+
     await UserModelData.findByIdAndUpdate(filter, operation);
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    Console.error(error);
   }
   return true;
 };
 
 
 module.exports = {
-  cleanDatasource,
+  cleanDatasource: {
+    activationCode: cleanDatasource('activationCode'),
+    changePassword: cleanDatasource('changePassword'),
+    deletePlayer: cleanDatasource('deletePlayer'),
+  },
 };

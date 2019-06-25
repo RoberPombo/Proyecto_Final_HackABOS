@@ -1,19 +1,26 @@
 'use strict';
 
+// Local imports: use_cases ========================================================================
+const { getPlayersUseCase } = require('../../use_cases/players/get.players.uc');
 
-const getPlayerController = getPlayerUseCase => async(req, res, next) => {
+
+const getPlayerController = async(req, res, next) => {
   const paramPlayerId = req.params.id;
   const {
     userId, role, sport, playerId,
   } = req.claims;
 
+  req.infoReq = { ...req.infoReq, userId };
 
-  const response = await getPlayerUseCase(userId, role, sport, playerId, paramPlayerId);
-  if (response instanceof Error) return next(response);
+  try {
+    const response = await getPlayersUseCase(role, sport, playerId, paramPlayerId);
 
+    req.response = response;
 
-  req.response = response;
-  return next();
+    return next();
+  } catch (error) {
+    return next(error);
+  }
 };
 
 

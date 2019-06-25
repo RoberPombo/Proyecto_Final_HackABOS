@@ -1,16 +1,32 @@
 'use strict';
 
+// Local imports: this module ======================================================================
+const { httpResponseMapper } = require('./mappers/http.response.mapper');
+// Local imports: config ===========================================================================
+const { Console } = require('../config/config.winston');
 
-const httpResponseController = httpResponseMapper => async(req, res, next) => {
+
+const httpResponseController = async(req, res, next) => {
   if (req.response && req.response.title) {
     const { response } = req;
 
-    const { status, message, data } = httpResponseMapper(response);
-    if (data.length === 0) return res.status(status).send({ message });
+    const {
+      status, title, data, file, redirectTo,
+    } = httpResponseMapper(response);
 
+    const {
+      init, ip, userAgent, userId,
+    } = req.infoReq;
+    const time = Date.now() - init;
+    Console.debug(`Res: ${title} = File: ${file} = Time:${time}ms = UserId: ${userId} = Ip: ${ip} = Agent: ${userAgent}`);
+
+
+    if (redirectTo) {
+      return res.redirect(302, redirectTo);
+    }
 
     return res.status(status).send({
-      message,
+      title,
       data,
     });
   }

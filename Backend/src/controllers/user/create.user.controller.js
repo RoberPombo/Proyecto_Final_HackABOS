@@ -1,24 +1,27 @@
 'use strict';
 
-// Local imports. ==================================================================================
-const { languageOptions } = require('../../config/index');
+// Local imports: config ===========================================================================
+const { languageOptions } = require('../../config/config.api');
+// Local imports: use_cases ========================================================================
+const { createUserUseCase } = require('../../use_cases/user/create.user.uc');
 
 
-const createUserController = createUserUseCase => async(req, _res, next) => {
-  const { email, password } = req.body;
+const createUserController = async(req, _res, next) => {
+  const { email, password, sport } = req.body;
   const language = req.acceptsLanguages(languageOptions) || 'en';
 
+  try {
+    const response = await createUserUseCase(email, password, sport, language);
 
-  const response = await createUserUseCase({
-    email,
-    password,
-    language,
-  });
-  if (response instanceof Error) return next(response);
+    req.infoReq = { ...req.infoReq, userId: response.data._id };
+    req.response = response;
 
+    return next();
+  } catch (error) {
+    req.infoReq = { ...req.infoReq, userId: email };
 
-  req.response = response;
-  return next();
+    return next(error);
+  }
 };
 
 

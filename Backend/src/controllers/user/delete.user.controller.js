@@ -1,18 +1,25 @@
 'use strict';
 
+// Local imports: use_cases ========================================================================
+const { deleteUserUseCase } = require('../../use_cases/user/delete.user.uc');
 
-const deleteUserController = deleteUserUseCase => async(req, _res, next) => {
+
+const deleteUserController = async(req, _res, next) => {
   const {
     userId, role, playerId, sport,
   } = req.claims;
 
+  req.infoReq = { ...req.infoReq, userId };
 
-  const response = await deleteUserUseCase(userId, role, playerId, sport);
-  if (response instanceof Error) return next(response);
+  try {
+    const response = await deleteUserUseCase(userId, role, playerId, sport);
 
+    req.response = response;
 
-  req.response = response;
-  return next();
+    return next();
+  } catch (error) {
+    return next(error);
+  }
 };
 
 

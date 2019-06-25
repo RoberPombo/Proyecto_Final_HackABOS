@@ -7,10 +7,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const PlayerSchema = new Schema({
-  userId: {
-    type: String,
-    unigue: true,
-  },
+  userId: String,
   fullName: String,
   birthdate: Number,
   nationality: String,
@@ -21,12 +18,9 @@ const PlayerSchema = new Schema({
   preferredFoot: String,
   preferredPositions: [],
   videos: [{
-    videoId: {
-      type: String,
-      unique: true,
-    },
+    videoId: String,
     views: Number,
-    likes: Number,
+    likes: String,
     publishedAt: String,
   }],
   createdAt: Number,

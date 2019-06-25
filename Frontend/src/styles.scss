@@ -18,8 +18,8 @@ $body-1: mat-typography-level(16px, 24px, 400));
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$SportScoutApp-primary: mat-palette($mat-blue, A700);
-$SportScoutApp-accent: mat-palette($mat-blue-gray, 400);
+$SportScoutApp-primary: mat-palette($mat-gray, 800);
+$SportScoutApp-accent: mat-palette($mat-gray, 600);
 
 // The warn palette is optional (defaults to red).
 $SportScoutApp-warn: mat-palette($mat-red);

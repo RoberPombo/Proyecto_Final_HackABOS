@@ -20,6 +20,7 @@ export class UserService {
     return this.http.post<IUserProfileHttpResponse>(`${environment.api.uri}/user/password`, {
       email,
       password,
+      sport: 'soccer',
     });
   }
 
@@ -34,6 +35,7 @@ export class UserService {
     return this.http.post<IUserProfileHttpResponse>(`${environment.api.uri}/user`, {
       email,
       password,
+      sport: 'soccer',
     });
   }
 
@@ -41,6 +43,7 @@ export class UserService {
   resendActivationEmail({ email }) {
     return this.http.post<IUserProfileHttpResponse>(`${environment.api.uri}/user/activation`, {
       email,
+      sport: 'soccer',
     });
   }
 

@@ -3,6 +3,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { YoutubeService } from 'src/app/core/services/youtube.service';
 import { IYoutubeVideosModel } from 'src/app/core/core.models';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { PlayerService } from 'src/app/core/services/player.service';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 
 
 @Component({
@@ -17,6 +19,8 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private sanitizer: DomSanitizer,
+    private playerServ: PlayerService,
+    private snackServ: SnackbarService,
     private youtubeServ: YoutubeService,
     private fb: FormBuilder,
   ) { }
@@ -29,7 +33,14 @@ export class SearchComponent implements OnInit {
 
 
   addVideo(video: IYoutubeVideosModel) {
-    console.log(video);
+    this.playerServ.addVideo({
+      videoId: video.id,
+      likeCount: video.likeCount,
+      viewCount: video.viewCount,
+      publishedAt: video.publishedAt,
+    }).subscribe(
+      res => this.snackServ.openSnackbar(res.message, 'green-snackbar', 3),
+    );
   }
 
 
@@ -42,7 +53,7 @@ export class SearchComponent implements OnInit {
   searchYoutube() {
     if (this.searchForm.valid) {
       this.youtubeServ.searchVideos(this.searchForm.controls.search.value).subscribe(
-        res => this.videos = res.items,
+        res => this.videos = res.data.items,
       );
     }
   }

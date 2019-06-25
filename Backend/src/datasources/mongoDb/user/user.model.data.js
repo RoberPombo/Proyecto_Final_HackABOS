@@ -12,13 +12,13 @@ const UserSchema = new Schema({
     unique: true,
   },
   password: String,
+  language: String,
   role: String,
+  sport: String,
+  activatedAt: Number,
   createdAt: Number,
   modifiedAt: Number,
   deletedAt: Number,
-  activatedAt: Number,
-  language: String,
-  sport: String,
   agentOf: {
     playerId: Schema.Types.ObjectId,
     sport: String,
@@ -45,18 +45,25 @@ const UserSchema = new Schema({
     sendAt: Number,
   },
   activationCode: [{
-    uuid: {
-      type: String,
-      unique: true,
-    },
+    uuid: String,
+    sport: String,
     sendAt: Number,
+  }],
+  messages: [{
+    userId: String,
+    message: String,
+    sendAt: Number,
+    readAt: Number,
+  }],
+  favoritePlayers: [{
+    playerId: String,
   }],
 });
 
 
-const UserModelData = mongoose.model('user', UserSchema);
+const CreateUserModelData = sport => mongoose.model(`${sport}-user`, UserSchema);
 
 
 module.exports = {
-  UserModelData,
+  CreateUserModelData,
 };

@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 // Material
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { UserService } from 'src/app/core/services/user.service';
 
 
 
@@ -40,6 +41,7 @@ export class PlayerProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public playerServ: PlayerService,
+    private userServ: UserService,
     private route: ActivatedRoute,
     private router: Router,
     private snackServ: SnackbarService,
@@ -58,7 +60,7 @@ export class PlayerProfileComponent implements OnInit {
         nationality: '',
         height: null,
         weight: null,
-        sport: '',
+        sport: this.userServ.userProfile.sport,
         team: '',
         preferredFoot: '',
         preferredPositions: [],
@@ -66,8 +68,8 @@ export class PlayerProfileComponent implements OnInit {
     } else {
       this.playerServ.getPlayerProfile(this.playerId).subscribe(
         response => {
-          this.playerData = response.data[0];
-          this.playerForm.controls.birthdate.setValue(new Date(response.data[0].birthdate));
+          this.playerData = response.data;
+          this.playerForm.controls.birthdate.setValue(new Date(response.data.birthdate));
         },
       );
     }

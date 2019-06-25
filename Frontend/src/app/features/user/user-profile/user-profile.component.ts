@@ -29,7 +29,7 @@ export class UserProfileComponent implements OnInit {
     this.userServ.getUserProfile().subscribe(
       res => {
         this.userData = res.data;
-        if (res.data.role === 'scout') {
+        if (res.data.role === 'agent') {
           this.playerServ.getPlayerProfile(res.data.agentOf.playerId).subscribe();
         }
       },
@@ -40,7 +40,7 @@ export class UserProfileComponent implements OnInit {
 
 
   addVideosPlayer() {
-    this.router.navigate(['/players/youtube']);
+    this.router.navigate([`/players/${this.userServ.userProfile.agentOf.playerId}/youtube`]);
   }
 
 

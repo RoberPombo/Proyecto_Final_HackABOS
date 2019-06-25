@@ -1,18 +1,25 @@
 'use strict';
 
+// Local imports: use_cases ========================================================================
+const { loginUseCase } = require('../../use_cases/auth/login.uc');
 
-const loginController = loginUseCase => async(req, _res, next) => {
-  const { email, password } = req.body;
+
+const loginController = async(req, _res, next) => {
+  const { email, password, sport } = req.body;
   const { ip } = req;
   const userAgent = req.headers['user-agent'];
+  try {
+    const { response, userId } = await loginUseCase({ email, password, sport }, ip, userAgent);
 
+    req.infoReq = { ...req.infoReq, userId };
+    req.response = response;
 
-  const response = await loginUseCase({ email, password }, ip, userAgent);
-  if (response instanceof Error) return next(response);
+    return next();
+  } catch (error) {
+    req.infoReq = { ...req.infoReq, userId: email };
 
-
-  req.response = response;
-  return next();
+    return next(error);
+  }
 };
 
 

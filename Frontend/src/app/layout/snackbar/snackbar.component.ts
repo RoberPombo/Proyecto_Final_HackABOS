@@ -12,7 +12,7 @@ export class SnackbarComponent {
 
   constructor(
     public snackbarRef: MatSnackBarRef<SnackbarComponent>,
-    @Inject(MAT_SNACK_BAR_DATA) public data: string
+    @Inject(MAT_SNACK_BAR_DATA) public data: any
   ) {
     this.message = data;
   }

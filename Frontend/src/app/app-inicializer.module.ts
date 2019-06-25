@@ -1,21 +1,17 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { UserService } from './core/services/user.service';
 import { PlayerService } from './core/services/player.service';
-import { Router } from '@angular/router';
 
-export function getInitialData(userServ: UserService, playerServ: PlayerService, router: Router) {
+
+export function getInitialData(userServ: UserService, playerServ: PlayerService) {
   return () => {
-    if (localStorage.getItem('auth')) {
+    const authTokens = JSON.parse(localStorage.getItem('auth'));
+    if (authTokens && authTokens.jwtToken) {
       return new Promise(async resolve => {
         try {
           await userServ.getUserProfile().toPromise();
-          if (userServ.userProfile.role === 'scout') {
+          if (userServ.userProfile.role === 'agent') {
             await playerServ.getPlayerProfile(userServ.userProfile.agentOf.playerId).toPromise();
-          }
-          if (userServ.userProfile.role === 'team') {
-            router.navigate(['/players']);
-          } else {
-            router.navigate(['/user']);
           }
           return resolve();
         } catch (error) {
@@ -24,8 +20,6 @@ export function getInitialData(userServ: UserService, playerServ: PlayerService,
         }
       });
     }
-    userServ.userProfile = undefined;
-    playerServ.playerProfile = undefined;
 
     return Promise.resolve();
   };
