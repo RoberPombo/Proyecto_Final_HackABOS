@@ -5,7 +5,7 @@ Esta app está realizada usando las siguientes tecnologías:
 ### Backend:
   Es una API Rest usando:
 
-      - NodeJS y Express
+      - Node.js y Express
 
       - MongoDB
 
