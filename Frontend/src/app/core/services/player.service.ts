@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 // Locals ====================================================================
-import { IPlayerProfile, IPlayerProfileHttpResponse, IVideosModel } from '../core.models';
+import { IPlayerProfile, IPlayerProfileHttpResponse, IVideosModel, IPlayerListHttpResponse } from '../core.models';
 import { environment } from 'src/environments/environment';
 import { Identifiers } from '@angular/compiler/src/render3/r3_identifiers';
 
@@ -13,6 +13,8 @@ import { Identifiers } from '@angular/compiler/src/render3/r3_identifiers';
 export class PlayerService {
 
   playerProfile: IPlayerProfile;
+  playerList: IPlayerProfile[];
+
 
   constructor(private http: HttpClient) { }
 
@@ -29,10 +31,16 @@ export class PlayerService {
   }
 
 
+  getPlayerList() {
+    return this.http
+      .get<IPlayerListHttpResponse>(`${environment.api.uri}/players`)
+      .pipe(tap(player => this.playerList = player.data));
+  }
+
   getPlayerProfile(id: string) {
     return this.http
       .get<IPlayerProfileHttpResponse>(`${environment.api.uri}/players/${id}`)
-      .pipe(tap(player => this.playerProfile = player.data));
+      .pipe(tap(res => this.playerProfile = res.data));
   }
 
 

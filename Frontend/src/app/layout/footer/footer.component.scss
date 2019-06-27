@@ -3,10 +3,13 @@ mat-toolbar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 0 1rem;
+  margin: 0;
+  max-height: 5vh;
   img {
     justify-self: center;
     align-self: center;
-    height: 2rem;
+    height: 1rem;
   }
 }
 

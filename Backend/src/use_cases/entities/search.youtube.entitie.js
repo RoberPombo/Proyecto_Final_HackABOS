@@ -15,7 +15,7 @@ const {
 const searchVideosYoutubeEntitie = async(searchValues) => {
   try {
     const searchValue = (searchValues && searchValues.filter) ? `&q=${searchValues.filter}` : '';
-    const page = (searchValues && searchValues.page) ? `&page=${searchValues.page}` : '';
+    const page = (searchValues && searchValues.page) ? `&pageToken=${searchValues.page}` : '';
     const maxResults = (searchValues && searchValues.maxResults) ? `&maxResults=${searchValues.maxResults}` : '&maxResults=5';
     const order = (searchValues && searchValues.order) ? `&order=${searchValues.order}` : '&order=relevance';
 

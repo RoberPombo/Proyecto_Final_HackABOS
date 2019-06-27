@@ -9,6 +9,11 @@ import { AuthGuard } from 'src/app/core/guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'user',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: HomeComponent,
     canActivate: [AuthGuard],
     children: [
@@ -32,7 +37,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'user',
+    redirectTo: '/user',
     pathMatch: 'full'
   }
 ];

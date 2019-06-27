@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 // Material Angular  =========================================================
+import { LayoutModule as MatLayoutModule } from '@angular/cdk/layout'
 import {
   MatButtonModule,
   MatDialogModule,
@@ -12,7 +13,7 @@ import {
   MatMenuModule,
   MatSnackBarModule,
   MatToolbarModule,
-  OverlayModule
+  MatTooltipModule,
 } from '@angular/material';
 // Locals ====================================================================
 import { DialogComponent } from './dialog/dialog.component';
@@ -33,20 +34,22 @@ const ModulesMaterial = [
   MatMenuModule,
   MatSnackBarModule,
   MatToolbarModule,
+  MatTooltipModule,
 ];
 
 
 @NgModule({
   declarations: [
     DialogComponent,
-    SnackbarComponent,
     HeaderComponent,
     FooterComponent,
-    LoaderComponent
+    LoaderComponent,
+    SnackbarComponent,
   ],
   imports: [
     CommonModule,
     CoreModule,
+    MatLayoutModule,
     ReactiveFormsModule,
     SharedModule,
     ModulesMaterial,
@@ -54,8 +57,9 @@ const ModulesMaterial = [
   exports: [
     HeaderComponent,
     FooterComponent,
-    LoaderComponent
+    LoaderComponent,
+    SnackbarComponent,
   ],
-  entryComponents: [DialogComponent, SnackbarComponent]
+  entryComponents: [DialogComponent],
 })
 export class LayoutModule { }

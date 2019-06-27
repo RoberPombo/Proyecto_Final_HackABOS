@@ -11,11 +11,11 @@ const { userRoutes } = require('./user.routes');
 const routes = express.Router();
 
 
+routes.use('/players', playerRoutes);
+
 routes.use('/user', userRoutes);
 
 routes.use('/', authRoutes);
-
-routes.use('/players', playerRoutes);
 
 
 module.exports = {

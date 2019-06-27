@@ -17,6 +17,7 @@ export class AdaptiveFieldComponent implements OnInit {
   formControl: FormControl;
   nameField: string;
   translateNameField: string;
+  optionTranslate: string;
   min: number;
   max: number;
 

@@ -21,6 +21,7 @@ const PlayerSchema = new Schema({
     videoId: String,
     views: Number,
     likes: String,
+    title: String,
     publishedAt: String,
   }],
   createdAt: Number,

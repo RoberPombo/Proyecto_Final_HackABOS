@@ -14,6 +14,11 @@ const {
 sendgridMail.setApiKey(apiKeySendgrid);
 
 
+/**
+ *
+ * @type {IsendConfirmChangePasswordEntitie}
+ *
+ */
 const sendConfirmChangePasswordEntitie = async(userEmail, uuid, sport, language = 'en') => {
   const linkActivation = `${apiUrl}/user/password?confirm_code=${uuid}&sport=${sport}`;
   const subject = {

@@ -12,7 +12,12 @@ const { updateUserRepositorie } = require('../../repositories/user/update.user.r
 const updateUserProfileUseCase = async(userId, sport, userProfile) => {
   if (!userId || !sport) throw CreateErrorResponseModel('Unauthorized user.', 'update.profile.uc.js', []);
 
-  const requiredFields = ['language', 'profile', 'contact'];
+  let requiredFields;
+  if (userProfile && userProfile.role && userProfile.role === 'team') {
+    requiredFields = ['role'];
+  } else {
+    requiredFields = ['language', 'profile', 'contact'];
+  }
   const validInputData = await validateUserDataEntitie(userProfile, requiredFields);
 
   const updatedProfile = await updateUserRepositorie.profile(userId, sport, validInputData);

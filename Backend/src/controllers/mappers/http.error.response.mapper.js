@@ -56,6 +56,12 @@ const httpErrorResponseMapper = (err) => {
     },
     {
       status: 409,
+      title: 'AddFavouritePlayerError',
+      message: 'Player has already been added.',
+      data: {},
+    },
+    {
+      status: 409,
       title: 'AddVideoError',
       message: 'Video has already been added.',
       data: {},

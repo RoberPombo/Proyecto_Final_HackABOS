@@ -1,55 +1,163 @@
-form {
-  display: flex;
-  flex-direction: column;
-  mat-tab-group {
+:host {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-auto-columns: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+
+  main {
+    section.title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-height: 100%;
     max-width: 100%;
-    mat-form-field {
-      text-align: center;
-    }
-    button {
+    overflow: auto;
+    margin: 0.5rem 0;
+    form {
+      display: flex;
+      flex-direction: column;
       width: 100%;
+
+      section.tab-content {
+        margin: 0.5rem;
+        padding: 0.5rem;
+        border-style: outset;
+        border-radius: 8px;
+        background-color: white;
+      }
+      section.birthdate-nationality,
+      section.foot-position {
+        display: flex;
+        justify-content: space-around;
+        :first-child {
+          max-width: 58%;
+        }
+        :last-child {
+          max-width: 37%;
+        }
+      }
+      section.height-weight,
+      section.sport-team {
+        display: flex;
+        justify-content: space-around;
+        :first-child {
+          max-width: 45%;
+        }
+        :last-child {
+          max-width: 45%;
+        }
+      }
+      button {
+        text-align: center;
+        align-self: center;
+        max-width: 60%;
+      }
     }
   }
-  button[type=submit]{
-    margin: 0.5rem;
+
+  section#videos {
+    min-height: 100%;
+    min-width: 100%;
+    article.video-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      background: white;
+      min-width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      div.subtitle {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      div.embed-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      div.actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    button {
+      margin-left: 0.5rem;
+    }
   }
 }
-.birthdate-nationality {
-  display: flex;
-  justify-content: space-around;
-  :first-child {
-    max-width: 58%;
-  }
-  :last-child {
-    max-width: 37%;
-  }
-}
-.height-weight, .sport-team {
-  display: flex;
-  justify-content: space-around;
-  :first-child {
-    max-width: 45%;
-  }
-  :last-child {
-    max-width: 45%;
-  }
-}
-.foot-position {
-  display: flex;
-  justify-content: space-around;
-  :first-child {
-    max-width: 30%;
-  }
-  :last-child {
-    max-width: 65%;
+
+@media screen and (min-width: 800px) and (max-width: 1200px) {
+  :host {
+    main {
+      section.title {
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+    content {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      grid-template-areas: "profile videos";
+      overflow: auto;
+      form {
+        position: fixed;
+        width: 45%;
+        grid-area: profile;
+      }
+      section#videos {
+        width: 45%;
+        grid-area: videos;
+      }
+    }
   }
 }
-.tab-content {
-  margin: 1rem 0;
-  padding: 0.5rem;
-  border-style: outset;
-  border-radius: 8px;
-}
-button[type=submit]{
-  margin: 0.5rem;
+
+@media screen and (min-width: 1200px) {
+  :host {
+    content {
+      display: grid;
+      grid-template-columns: 40% 60%;
+      grid-template-areas: "profile videos";
+      overflow: auto;
+      form {
+        position: fixed;
+        width: 35%;
+        grid-area: profile;
+      }
+      section#videos {
+        width: 60%;
+        grid-area: videos;
+      }
+    }
+  }
 }

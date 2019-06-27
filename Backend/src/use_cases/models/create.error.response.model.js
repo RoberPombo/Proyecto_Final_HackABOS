@@ -1,11 +1,28 @@
 'use strict';
 
 
+/**
+ *
+ * @param {string} message
+ * @param {string} file
+ * @param {any} error
+ *
+ * @returns {IResponseModel}
+ *
+ */
 const CreateErrorResponseModel = (message, file, error) => {
   const optionsErrorsHttp = [
     {
       title: 'AccessError',
       message: 'Forbidden access.',
+    },
+    {
+      title: 'AddVideoError',
+      message: 'Video has already been added.',
+    },
+    {
+      title: 'AddFavouritePlayerError',
+      message: 'Player has already been added.',
     },
     {
       title: 'ActivatedUserError',

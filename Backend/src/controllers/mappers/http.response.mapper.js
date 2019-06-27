@@ -8,7 +8,7 @@ const { URL_FRONT: urlFront } = process.env;
 
 
 const sentUserProfile = [
-  'email', 'language', 'role', 'sport', 'agentOf', 'profile', 'contact', 'messages', 'fauvoritePlayers',
+  'email', 'language', 'role', 'sport', 'agentOf', 'profile', 'contact', 'messages', 'favoritePlayers',
 ];
 const sentPlayerProfile = [
   '_id', 'fullName', 'birthdate', 'nationality', 'height', 'weight', 'sport', 'team', 'preferredFoot', 'preferredPositions', 'videos',
@@ -34,6 +34,12 @@ const httpResponseMapper = (response) => {
       title: 'SentEmailChangePassword',
       message: 'Sent email to confirm password change.',
       data: {},
+    },
+    {
+      status: 200,
+      title: 'SentPlayersList',
+      message: 'Sent players list.',
+      data: response.data,
     },
     {
       status: 200,
@@ -67,6 +73,12 @@ const httpResponseMapper = (response) => {
       data: (response.message === 'Created player.') ? filteredObjectResponse(response.data, sentPlayerProfile) : {},
     },
     // Status 202 ==================================================================================
+    {
+      status: 202,
+      title: 'AddFavouritePlayer',
+      message: 'Added favourite player.',
+      data: response.data.fauvoritePlayers,
+    },
     {
       status: 202,
       title: 'AuthenticatedUser',
@@ -132,7 +144,7 @@ const httpResponseMapper = (response) => {
   );
 
 
-  return httpResponse;
+  return { ...httpResponse, file: response.file };
 };
 
 

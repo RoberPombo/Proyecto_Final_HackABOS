@@ -24,6 +24,7 @@ const addVideoUseCase = async(userId, role, sport, playerId, paramPlayerId, vide
       videoId: videoData.videoId,
       views: videoData.viewCount,
       likes: videoData.likeCount,
+      title: videoData.channelTitle,
       publishedAt: new Date(videoData.publishedAt).getTime(),
     }],
   }, requiredFileds);

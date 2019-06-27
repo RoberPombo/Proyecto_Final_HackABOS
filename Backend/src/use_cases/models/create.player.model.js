@@ -1,6 +1,14 @@
 'use strict';
 
 
+/**
+ *
+ * @param {string} userId
+ * @param {string} sport
+ * @param {object} inputData
+ *
+ * @returns {IPlayerModel}
+ */
 const CreatePlayerModel = (userId, sport, inputData) => ({
   userId,
   fullName: inputData.fullName,

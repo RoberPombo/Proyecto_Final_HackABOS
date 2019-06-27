@@ -1,8 +1,22 @@
-
-.flex {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+.snackbar-wrap {
+  position: fixed;
+  bottom: 0.2rem;
+  left: 50%;
+  padding: 1.2rem;
+  border-radius: 0.3rem;
+  min-width: 20%;
+  transform-origin: center center;
+  transform: translate(-50%, 0%);
+  &.success {
+    background: rgb(59, 138, 92)
+  }
+  &.danger {
+    background: rgb(107, 44, 28)
+  }
+  .snackbar-text {
+    text-align: center;
+    font-size: 1.3rem;
+    color: white;
+    margin: 0;
+  }
 }
-

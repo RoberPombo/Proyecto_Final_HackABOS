@@ -32,6 +32,7 @@ const optionsSchema = {
     videoId: joi.string().regex(whiteList),
     views: joi.number().greater(0),
     likes: joi.string().regex(whiteList),
+    title: joi.string().regex(whiteList),
     publishedAt: joi.date().timestamp(),
   }),
   filter: joi.string().regex(whiteList),
@@ -44,7 +45,7 @@ const optionsSchema = {
 const validatePlayerDataEntitie = async(payload, requiredFields) => {
   const newPayload = Object.keys(payload).reduce((c, k) => {
     let auxValue = payload[k];
-    if (requiredFields.indexOf(k) === -1) return c;
+    if (requiredFields.indexOf(k) === -1 || !auxValue) return c;
     if (k === '_id') {
       auxValue = ObjectId.isValid(auxValue) ? auxValue : 'invalid';
     } else if (k === 'fullName' || k === 'team') {

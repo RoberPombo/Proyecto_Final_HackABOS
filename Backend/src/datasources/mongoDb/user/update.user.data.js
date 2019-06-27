@@ -67,6 +67,21 @@ const updateUserDatasource = option => async(userId, sport, dataUpdate) => {
       },
     };
     dataUpdateRedis = { playerId: dataUpdate._id, role: 'agent' };
+  } else if (option === 'addFavoritePlayer') {
+    filter = {
+      ...filter,
+      role: 'team',
+      'favoritePlayers.playerId': { $ne: dataUpdate.favoritePlayers[0].playerId },
+    };
+    operation = {
+      $push: {
+        favoritePlayers: {
+          playerId: dataUpdate.favoritePlayers[0].playerId,
+          fullName: dataUpdate.favoritePlayers[0].fullName,
+          preferredPositions: dataUpdate.favoritePlayers[0].preferredPositions,
+        },
+      },
+    };
   }
 
   const UserModelData = await CreateUserModelData(sport);
@@ -85,6 +100,7 @@ module.exports = {
   updateUserDatasource: {
     activate: updateUserDatasource('activate'),
     addActivationCode: updateUserDatasource('addActivationCode'),
+    addFavoritePlayer: updateUserDatasource('addFavoritePlayer'),
     addPlayer: updateUserDatasource('addPlayer'),
     changePassword: updateUserDatasource('changePassword'),
     confirmChangePassword: updateUserDatasource('confirmChangePassword'),

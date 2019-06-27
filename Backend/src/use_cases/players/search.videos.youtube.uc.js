@@ -14,7 +14,9 @@ const searchVideosYoutubeUseCase = async(role, playerId, paramPlayerId, filters)
   }
 
   const requiredFields = ['id', 'filter', 'page', 'maxResults', 'order'];
-  const validFilters = await validatePlayerDataEntitie({ ...filters, _id: paramPlayerId }, requiredFields);
+  const validFilters = await validatePlayerDataEntitie(
+    { ...filters, _id: paramPlayerId }, requiredFields
+  );
 
   const searchedVideos = await searchVideosYoutubeEntitie(validFilters);
 

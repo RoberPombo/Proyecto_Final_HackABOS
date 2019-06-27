@@ -15,7 +15,7 @@ import { PlayerService } from './player.service';
 export class AuthService {
 
   authTokens: IAuthTokens;
-  rejectRefreshToken = false;
+  rejectRefreshToken = true;
   role: string;
 
   constructor(
@@ -55,14 +55,14 @@ export class AuthService {
 
 
   refreshToken() {
-
     return this.http.get<ILoginHttpResponse>(`${environment.api.uri}/refreshToken`)
       .pipe(tap(response => {
-        this.authTokens = response.data[0];
-        this.rejectRefreshToken = false;
+        this.authTokens = response.data;
+        this.rejectRefreshToken = true;
         if (this.authTokens && this.authTokens.jwtToken) {
           localStorage.setItem('auth', JSON.stringify(this.authTokens));
         }
+        this.router.navigate(['']);
       }));
   }
 }

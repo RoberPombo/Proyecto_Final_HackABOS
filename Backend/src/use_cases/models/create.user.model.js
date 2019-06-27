@@ -5,6 +5,13 @@ const { createHashPasswordEntitie } = require('../entities/hash.password.entitie
 const { createUuidV4Entitie } = require('../entities/create.uuid.v4.entitie');
 
 
+/**
+ *
+ * @param {{email: string, password: string, sport: string, language: string}}
+ *
+ * @return {IUserModel}
+ *
+ */
 const CreateUserModel = ({
   email, password, sport, language,
 }) => ({

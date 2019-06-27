@@ -9,14 +9,20 @@ const findPlayerDatasource = option => async(filterValue, sport) => {
 
   const projection = {
     __v: 0,
+    createdAt: 0,
+    modifiedAt: 0,
+    deletedAt: 0,
   };
   let filter;
 
   if (option === 'id') {
+    const newFilter = (filterValue && filterValue._id) ? filterValue._id : filterValue;
     filter = {
-      _id: filterValue,
+      _id: newFilter,
       deletedAt: 0,
     };
+  } else if (option === 'list') {
+    filter = {};
   }
 
   const findedPlayers = await PlayerDataModel.find(filter, projection).lean();
@@ -28,5 +34,6 @@ const findPlayerDatasource = option => async(filterValue, sport) => {
 module.exports = {
   findPlayerDatasource: {
     byId: findPlayerDatasource('id'),
+    list: findPlayerDatasource('list'),
   },
 };

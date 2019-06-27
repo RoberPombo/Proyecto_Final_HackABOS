@@ -1,0 +1,30 @@
+section.content {
+  article.card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 80vw;
+    width: 100%;
+    background-color: white;
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  section.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    article.card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-width: 30%;
+      width: 30%;
+      background-color: white;
+      margin: 0.5rem;
+      padding: 0.5rem;
+    }
+  }
+}

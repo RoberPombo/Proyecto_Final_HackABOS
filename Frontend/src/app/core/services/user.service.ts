@@ -15,6 +15,12 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  addFavoritePlayer(player) {
+    return this.http.post<IUserProfileHttpResponse>(`${environment.api.uri}/user/addPlayer`,
+      player,
+    );
+  }
+
 
   changePassword({ email, password }) {
     return this.http.post<IUserProfileHttpResponse>(`${environment.api.uri}/user/password`, {

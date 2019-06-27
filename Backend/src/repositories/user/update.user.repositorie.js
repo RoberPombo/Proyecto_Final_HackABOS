@@ -23,6 +23,8 @@ const updateUserRepositorie = option => async(userId, sport, dataUpdate) => {
       updatedUser = await updateUserDatasource.changePassword(userId, sport, dataUpdate);
     } else if (option === 'addPlayer') {
       updatedUser = await updateUserDatasource.addPlayer(userId, sport, dataUpdate);
+    } else if (option === 'addFavoritePlayer') {
+      updatedUser = await updateUserDatasource.addFavoritePlayer(userId, sport, dataUpdate);
     }
   } catch (error) {
     throw CreateErrorResponseModel('Internal server error.', 'update.user.repositorie.js', error);
@@ -37,6 +39,7 @@ module.exports = {
   updateUserRepositorie: {
     activate: updateUserRepositorie('activate'),
     addActivationCode: updateUserRepositorie('addActivationCode'),
+    addFavoritePlayer: updateUserRepositorie('addFavoritePlayer'),
     addPlayer: updateUserRepositorie('addPlayer'),
     changePassword: updateUserRepositorie('changePassword'),
     confirmChangePassword: updateUserRepositorie('confirmChangePassword'),

@@ -11,6 +11,8 @@ const findPlayerRepositorie = option => async(filterValue, sport) => {
   try {
     if (option === 'id') {
       findedPlayer = await findPlayerDatasource.byId(filterValue, sport);
+    } else if (option === 'list') {
+      findedPlayer = await findPlayerDatasource.list(filterValue, sport);
     }
   } catch (error) {
     if (error.message.includes('Object failed')) {
@@ -30,5 +32,6 @@ const findPlayerRepositorie = option => async(filterValue, sport) => {
 module.exports = {
   findPlayerRepositorie: {
     byId: findPlayerRepositorie('id'),
+    list: findPlayerRepositorie('list'),
   },
 };

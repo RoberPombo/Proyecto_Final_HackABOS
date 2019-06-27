@@ -20,7 +20,7 @@ export class JWTInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     if (this.authService && this.authService.authTokens) {
-      if (this.authService.rejectRefreshToken === false) {
+      if (this.authService.rejectRefreshToken === true) {
         const { jwtToken } = this.authService.authTokens;
 
         request = request.clone({

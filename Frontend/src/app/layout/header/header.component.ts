@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from 'src/app/core/services/user.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -14,11 +15,17 @@ export class HeaderComponent {
     private authServ: AuthService,
     private router: Router,
     public userServ: UserService,
+    private location: Location,
   ) { }
 
 
   logout() {
     this.authServ.logout();
+  }
+
+
+  goBack() {
+    this.location.back();
   }
 
 

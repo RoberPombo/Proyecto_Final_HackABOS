@@ -1,6 +1,15 @@
 'use strict';
 
 
+/**
+ *
+ * @param {String} message
+ * @param {String} file
+ * @param {any} data
+ *
+ * @returns {IResponseModel}
+ *
+ */
 const CreateResponseModel = (message, file, data) => {
   const options = [
     {
@@ -8,8 +17,8 @@ const CreateResponseModel = (message, file, data) => {
       message: 'Activated user.',
     },
     {
-      title: 'AddVideoError',
-      message: 'Video has already been added.',
+      title: 'AddFavouritePlayer',
+      message: 'Added favourite player.',
     },
     {
       title: 'AuthenticatedUser',
@@ -32,10 +41,6 @@ const CreateResponseModel = (message, file, data) => {
       message: 'Deleted user.',
     },
     {
-      title: 'YoutubeConnectionError',
-      message: 'Error in connection with Youtube.',
-    },
-    {
       title: 'RefreshAuthenticatedUser',
       message: 'User authentication is refreshed.',
     },
@@ -46,6 +51,10 @@ const CreateResponseModel = (message, file, data) => {
     {
       title: 'SentEmailChangePassword',
       message: 'Sent email to confirm password change.',
+    },
+    {
+      title: 'SentPlayersList',
+      message: 'Sent players list.',
     },
     {
       title: 'SentPlayerProfile',
@@ -74,6 +83,10 @@ const CreateResponseModel = (message, file, data) => {
     {
       title: 'VideoAdded',
       message: 'Video added to player.',
+    },
+    {
+      title: 'YoutubeConnectionError',
+      message: 'Error in connection with Youtube.',
     },
   ];
 

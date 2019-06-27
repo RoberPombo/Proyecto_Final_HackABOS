@@ -57,6 +57,8 @@ const UserSchema = new Schema({
   }],
   favoritePlayers: [{
     playerId: String,
+    fullName: String,
+    preferredPositions: [],
   }],
 });
 

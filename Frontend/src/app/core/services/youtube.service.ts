@@ -17,9 +17,10 @@ export class YoutubeService {
 
   constructor(private http: HttpClient, private userServ: UserService) { }
 
-  searchVideos(filter) {
+  searchVideos(filter, page = '') {
+    const pageSend = page ? `&page=${page}` : '';
     return this.http.get<IYoutubeHttpResponse>(
-      `${environment.api.uri}/players/${this.userServ.userProfile.agentOf.playerId}/youtube?filter=${filter}`
+      `${environment.api.uri}/players/${this.userServ.userProfile.agentOf.playerId}/youtube?filter=${filter}${pageSend}`
     ).pipe(tap(
       res => {
         this.nextPage = res.data.nextPageToken;

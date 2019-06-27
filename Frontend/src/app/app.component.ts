@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { TranslateService } from '@ngx-translate/core';
 import { LoaderService } from './core/services/loader.service';
+import { UserService } from './core/services/user.service';
 
 
 @Component({
@@ -13,15 +14,23 @@ import { LoaderService } from './core/services/loader.service';
 export class AppComponent implements OnInit {
   title = 'Sport Scout';
 
-  activeLang = 'es';
+  languageOptions = ['en', 'es'];
 
   constructor(
+    public loaderServ: LoaderService,
+    private userServ: UserService,
     private swUpdate: SwUpdate,
     private translate: TranslateService,
-    public loaderServ: LoaderService,
   ) {
-    this.translate.setDefaultLang(this.activeLang);
-    this.translate.use(this.activeLang);
+    this.translate.setDefaultLang('en');
+    if (this.userServ.userProfile && this.userServ.userProfile.language) {
+      this.translate.use(this.userServ.userProfile.language);
+    } else {
+      const langNav = navigator.language.slice(0, 2).toLowerCase();
+      if (this.languageOptions.indexOf(langNav) !== -1) {
+        this.translate.use(langNav);
+      }
+    }
   }
 
   ngOnInit() {

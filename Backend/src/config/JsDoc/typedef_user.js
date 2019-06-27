@@ -38,26 +38,27 @@
  * @property {string} language            @property {string} sport
  * @property {number} createdAt           @property {number} modifiedAt
  * @property {number} deletedAt           @property {number} activatedAt
- * @property {IagentOf} agentOf           @property {Iprofile} profile
- * @property {Icontact} contact           @property {IchangePassword} changePassword
+ * @property {IagentOf} [agentOf]         @property {Iprofile} profile
+ * @property {Icontact} contact           @property {IchangePassword} [changePassword]
  * @property {IactivationCode} activationCode
  *
  */
 // IinputData ========================================================
 /**
- * @typedef IinputData
- * @property {string} email               @property {string} password
- * @property {string} language
- */
-// ICreateUserModel ==================================================
-/**
- * @typedef {(inputData:IinputData) => IUserModel} ICreateUserModel
+ * @typedef IPlayerModel
+ * @property {string} [_id]                @property {string} userId
+ * @property {string} fullName             @property {number} birthdate
+ * @property {string} nationality          @property {string} height
+ * @property {string} weight               @property {string} sport
+ * @property {string} team                 @property {string} preferredFoot
+ * @property {string[]} preferredPositions @property {number} createdAt
+ * @property {number} modifiedAt           @property {number} deletedAt
  */
 // IResponseModel ====================================================
 /**
  * @typedef IResponseModel
  * @property {string} title               @property {string} message
- * @property {any} data
+ * @property {any} data                   @property {string} file
  */
 // ICreateResponseModel ==============================================
 /**
@@ -101,15 +102,15 @@
  */
 // IsendConfirmChangePasswordEntitie =================================
 /**
- * @typedef {(userEmail:string, uuid:string, [language]:string) => Promise<boolean>} IsendConfirmChangePasswordEntitie
+ * @typedef {(userEmail:string, uuid:string, sport:string,[language]:string) => Promise<boolean>} IsendConfirmChangePasswordEntitie
  */
 // IsendEmailActivationEntitie =======================================
 /**
- * @typedef {(userEmail:string, activationCode:string, [language]:string) => Promise<boolean>} IsendEmailActivationEntitie
+ * @typedef {(userEmail:string, activationCode:string, sport:string, [language]:string) => Promise<boolean>} IsendEmailActivationEntitie
  */
 // IvalidateUserDataEntitie ==========================================
 /**
- * @typedef {(payload:IinputData | IUserModel) => Promise<{}>} IvalidateUserDataEntitie
+ * @typedef {(payload: | IUserModel) => Promise<{}>} IvalidateUserDataEntitie
  */
 // IactivateUserUseCase ==============================================
 /**

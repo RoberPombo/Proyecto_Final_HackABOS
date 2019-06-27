@@ -1,6 +1,6 @@
 <form [formGroup]="parentForm" class="form-group">
 
-  <mat-form-field formGroupName="{{nameField}}">
+  <mat-form-field appearance="legacy" formGroupName="{{nameField}}">
     <mat-select placeholder="{{ translateNameField | translate }}" class="form-control" formControlName="{{nameField}}"
       multiple *ngIf="multiple">
       <mat-option *ngFor="let option of settingsField[1]" [value]="option">

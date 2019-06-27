@@ -31,7 +31,8 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError(error => {
         if (
           error.status === 401 && error.error.message === 'Unauthorized user.' &&
-          this.authService.authTokens && this.authService.authTokens.refreshToken
+          this.authService.authTokens && this.authService.authTokens.refreshToken &&
+          error.url.indexOf('/auth') === -1 && this.authService.rejectRefreshToken === false
         ) {
           this.authService.rejectRefreshToken = true;
           this.authService.refreshToken().subscribe();
@@ -39,13 +40,12 @@ export class ErrorInterceptor implements HttpInterceptor {
           error.url.indexOf('/auth') === -1 &&
           error.status === 401 && error.error.message === 'Unauthorized refresh token.'
         ) {
-          this.snackServ.openSnackbar(error.error.message, 'red-snackbar', 3);
+          this.snackServ.show(error.error.title, 'danger');
           this.authService.logout();
         } else {
-          this.snackServ.openSnackbar(error.error.message, 'red-snackbar', 3);
-          // this.router.navigate(['/user']);
+          this.snackServ.show(error.error.title, 'danger');
         }
-        return; // throwError(error);
+        return throwError(error);
       })
     );
   }

@@ -1,3 +1,45 @@
-<p>
-  players-list works!
-</p>
+<section class="header">
+  <app-autocomplete-field [parentForm]="playerForm"
+    [settingsField]="['filterPositions', ['', 'GK', 'CB', 'LB', 'RB', 'DM', 'LDM', 'RDM', 'LW', 'RW','AM', 'FW']]"
+    [value]="preferredPositions">
+  </app-autocomplete-field>
+</section>
+
+<section class="content" *ngIf="playerList && playerList[0].fullName">
+  <ng-container *ngFor="let player of (playerList | filter:userServ.userProfile.favoritePlayers)">
+    <article class="card" *ngIf="checkPosition(player)">
+      <header>
+        <h4>{{player.fullName | titlecase}}</h4>
+        <span>{{ player.birthdate | showAge }} {{'player.age' | translate }}</span>
+        <span matTooltip="{{'player.addFavorite' | translate}}" matTooltipPosition="above"
+          (click)="addFavoritePlayer(player)"><i class="material-icons">
+            folder_special
+          </i></span>
+      </header>
+
+      <content>
+
+        <p><strong>{{ 'player.position' | translate}}</strong>
+          <ng-container *ngFor="let position of player.preferredPositions">
+            {{position | translate}}
+          </ng-container>
+        </p>
+
+
+      </content>
+
+      <footer>
+        <div>
+          <i class="material-icons" matTooltip="{{'player.numVideos' | translate}}" matTooltipPosition="above">
+            ondemand_video </i>
+          <span>{{player.videos.length}}</span>
+        </div>
+        <p>{{player.team | titlecase}}</p>
+        <span matTooltip="{{'player.goProfile' | translate}}" matTooltipPosition="above"
+          [routerLink]="['/players', player._id]"><i class="material-icons">
+            folder_shared </i></span>
+      </footer>
+    </article>
+  </ng-container>
+
+</section>

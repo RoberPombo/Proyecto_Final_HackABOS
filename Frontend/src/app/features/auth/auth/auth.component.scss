@@ -54,6 +54,7 @@ section#forms {
     display: flex;
     height: 50vh;
     overflow: hidden;
+    background-color: white;
     li.moveOutRegister {
       margin-left: 0%;
       animation: moveOutRegister 1s ease;
@@ -73,7 +74,7 @@ section#forms {
 @media (min-width: 800px) {
   section#wallpaper {
     display: block;
-    background-image: url('../../../../assets/img/fondo.jpg');
+    background-image: url("../../../../assets/img/fondo.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

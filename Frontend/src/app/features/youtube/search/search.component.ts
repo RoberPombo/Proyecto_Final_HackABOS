@@ -16,10 +16,16 @@ export class SearchComponent implements OnInit {
   public videos: any[];
   searchForm: FormGroup;
 
+  nextPage: string;
+  prevPage: string;
+  totalPages: number;
+  page: number;
+  filterValue: string;
+
 
   constructor(
     private sanitizer: DomSanitizer,
-    private playerServ: PlayerService,
+    public playerServ: PlayerService,
     private snackServ: SnackbarService,
     private youtubeServ: YoutubeService,
     private fb: FormBuilder,
@@ -38,31 +44,41 @@ export class SearchComponent implements OnInit {
       likeCount: video.likeCount,
       viewCount: video.viewCount,
       publishedAt: video.publishedAt,
+      channelTitle: video.channelTitle,
     }).subscribe(
-      res => this.snackServ.openSnackbar(res.message, 'green-snackbar', 3),
+      res => this.snackServ.show(res.title, 'success'),
     );
   }
 
 
   getSantizeUrl(id: string) {
-    const url = `//www.youtube.com/embed/${id}`;
+    const url = `https://www.youtube.com/embed/${id}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
 
-  searchYoutube() {
+  searchYoutube(pageChange) {
     if (this.searchForm.valid) {
-      this.youtubeServ.searchVideos(this.searchForm.controls.search.value).subscribe(
-        res => this.videos = res.data.items,
+      this.filterValue = this.searchForm.value.search;
+      if (!this.page) this.page = 1;
+      this.youtubeServ.searchVideos(this.searchForm.controls.search.value, pageChange).subscribe(
+        res => {
+          this.videos = res.data.items;
+          this.nextPage = res.data.nextPageToken || '';
+          this.prevPage = res.data.prevPageToken || '';
+          this.totalPages = Math.ceil(res.data.totalResults / 5);
+        },
       );
     }
   }
 
-  nextPage() {
-    console.log('nextpage');
+  goNextPage() {
+    this.page = this.page + 1;
+    this.searchYoutube(this.nextPage);
   }
 
-  prevPage() {
-    console.log('prevpage');
+  goPrevPage() {
+    this.page = this.page - 1;
+    this.searchYoutube(this.prevPage);
   }
 }

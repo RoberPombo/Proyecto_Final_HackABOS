@@ -1,61 +1,100 @@
-<h2>{{ 'player.title' | translate }}:</h2>
+<main>
+  <section class="title">
+    <h3>{{ 'player.title' | translate }}:</h3>
 
-<form [formGroup]="playerForm" (ngSubmit)="onSubmit(playerForm)" *ngIf='playerData'>
-
-  <section class="tab-content">
-
-    <app-adaptive-field [parentForm]="playerForm" [settingsField]="['fullName', 'length(5,30)', 'required']"
-      [value]="playerData.fullName">
-    </app-adaptive-field>
-
-    <section class="birthdate-nationality">
-      <mat-form-field>
-        <input matInput [matDatepicker]="datepicker" placeholder="{{ 'player.datepicker' | translate}}"
-          formControlName="birthdate">
-        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-        <mat-datepicker #datepicker></mat-datepicker>
-      </mat-form-field>
-
-      <app-autocomplete-field [parentForm]="playerForm"
-        [settingsField]="['nationality', ['spanish', 'portuguese', 'french'], 'required']"
-        [value]="playerData.nationality">
-      </app-autocomplete-field>
-    </section>
-
-    <section class="height-weight">
-      <app-adaptive-field [parentForm]="playerForm" [settingsField]="['height', 'range(1,2.50)', 'required']"
-        [value]="playerData.height">
-      </app-adaptive-field>
-
-      <app-adaptive-field [parentForm]="playerForm" [settingsField]="['weight', 'range(30,150)', 'required']"
-        [value]="playerData.weight">
-      </app-adaptive-field>
-    </section>
-
-    <section class="sport-team">
-      <app-autocomplete-field [parentForm]="playerForm" [settingsField]="['sport', ['soccer'], 'required']"
-        [value]="playerData.sport">
-      </app-autocomplete-field>
-
-      <app-adaptive-field [parentForm]="playerForm" [settingsField]="['team', 'required']" [value]="playerData.team">
-      </app-adaptive-field>
-    </section>
-
-    <section class="foot-position">
-      <app-autocomplete-field [parentForm]="playerForm"
-        [settingsField]="['preferredFoot', ['left', 'rigth'], 'required']" [value]="playerData.preferredFoot">
-      </app-autocomplete-field>
-
-      <app-autocomplete-field [parentForm]="playerForm"
-        [settingsField]="['preferredPositions', ['GK', 'CB', 'LB', 'RB', 'DM', 'LDM', 'RDM', 'LW', 'RW', 'FW'],'multiple', 'required']"
-        [value]="playerData.preferredPositions">
-      </app-autocomplete-field>
-    </section>
-
+    <button mat-raised-button [routerLink]="['/user']">
+      {{'player.user' | translate}}
+    </button>
   </section>
+</main>
+
+<content *ngIf='playerData'>
+  <form [formGroup]="playerForm" (ngSubmit)="onSubmit(playerForm)" id="profile"
+    *ngIf="showComponent.includes('profile')">
+
+    <section class="tab-content">
+      <app-adaptive-field [parentForm]="playerForm" [settingsField]="['fullName', 'length(5,30)', 'required']"
+        [value]="playerData.fullName">
+      </app-adaptive-field>
+      <section class="birthdate-nationality">
+        <mat-form-field>
+          <input matInput [matDatepicker]="datepicker" placeholder="{{ 'player.datepicker' | translate}}"
+            formControlName="birthdate">
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker></mat-datepicker>
+        </mat-form-field>
+        <app-autocomplete-field [parentForm]="playerForm"
+          [settingsField]="['nationality', ['spanish', 'portuguese', 'french'], 'required']"
+          [value]="playerData.nationality">
+        </app-autocomplete-field>
+      </section>
+      <section class="height-weight">
+        <app-adaptive-field [parentForm]="playerForm" [settingsField]="['height', 'range(1,2.50)', 'required']"
+          [value]="playerData.height">
+        </app-adaptive-field>
+        <app-adaptive-field [parentForm]="playerForm" [settingsField]="['weight', 'range(30,150)', 'required']"
+          [value]="playerData.weight">
+        </app-adaptive-field>
+      </section>
+      <section class="sport-team">
+        <app-autocomplete-field [parentForm]="playerForm" [settingsField]="['sport', ['soccer'], 'required']"
+          [value]="playerData.sport">
+        </app-autocomplete-field>
+        <app-adaptive-field [parentForm]="playerForm" [settingsField]="['team', 'required']" [value]="playerData.team">
+        </app-adaptive-field>
+      </section>
+      <section class="foot-position">
+        <app-autocomplete-field [parentForm]="playerForm"
+          [settingsField]="['preferredPositions', ['GK', 'CB', 'LB', 'RB', 'DM', 'LDM', 'RDM', 'LW', 'RW', 'FW'],'multiple', 'required']"
+          [value]="playerData.preferredPositions">
+        </app-autocomplete-field>
+        <app-autocomplete-field [parentForm]="playerForm"
+          [settingsField]="['preferredFoot', ['left', 'rigth'], 'required']" [value]="playerData.preferredFoot">
+        </app-autocomplete-field>
+      </section>
+    </section>
+
+    <button mat-raised-button color="primary" type="submit" (click)="onSubmit(parentForm)">
+      {{ 'player.submit' | translate }}
+    </button>
+  </form>
 
 
-  <button mat-raised-button color="primary" type="submit" name="player-button">
-    {{ 'player.submit' | translate }}
+  <section id="videos" *ngIf="showComponent.includes('videos') && playerData">
+    <ng-container *ngFor=" let video of playerData.videos">
+      <article class="video-card">
+        <div class="title">
+          <h3>{{video.title}}titulo prueba</h3>
+        </div>
+        <div class="subtitle">
+          <span><i class="material-icons">
+              visibility </i>{{video.views | number }}</span>
+          <span><i class="material-icons">
+              thumb_up </i>{{video.likes}}</span>
+        </div>
+        <div class="embed-container">
+          <iframe [src]='getSantizeUrl(video.videoId)' frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="actions">
+          <small>{{'player.publish' | translate}}{{ video.publishedAt | date }}</small>
+        </div>
+      </article>
+
+    </ng-container>
+  </section>
+</content>
+
+
+<footer>
+  <button mat-raised-button *ngIf="showComponent === 'profile'" (click)="changeShowComponent('videos')">
+    {{'player.videos' | translate}}
   </button>
-</form>
+  <button mat-raised-button *ngIf="showComponent === 'videos'" (click)="changeShowComponent('profile')">
+    {{'player.profile' | translate}}
+  </button>
+  <button mat-raised-button *ngIf="userServ && userServ.userProfile && userServ.userProfile.role === 'agent'"
+    [routerLink]="['/players', userServ.userProfile.agentOf.playerId, 'youtube']">
+    {{'player.youtube' | translate}}
+  </button>
+</footer>

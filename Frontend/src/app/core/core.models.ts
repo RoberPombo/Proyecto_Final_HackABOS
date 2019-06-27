@@ -7,12 +7,14 @@ export interface IAuthTokens {
 
 export interface ILoginHttpResponse {
   id: string;
+  title: string;
   message: string;
   data: IAuthTokens;
 }
 
 export interface IRegisterHttpResponse {
   id: string;
+  title: string;
   message: string;
   data: [];
 }
@@ -44,12 +46,14 @@ export interface IUserProfile {
     email: string;
     other: string;
   };
+  favoritePlayers: any[]
 }
 
 
 export interface IUserProfileHttpResponse {
   id: string;
   message: string;
+  title: string;
   data: IUserProfile;
 }
 
@@ -59,6 +63,7 @@ export interface IVideosModel {
   likeCount: string;
   viewCount: number;
   publishedAt: string;
+  channelTitle: string;
 }
 
 
@@ -83,8 +88,16 @@ export interface IPlayerProfile {
 
 export interface IPlayerProfileHttpResponse {
   id: string;
+  title: string;
   message: string;
   data: IPlayerProfile;
+}
+
+export interface IPlayerListHttpResponse {
+  id: string;
+  title: string;
+  message: string;
+  data: IPlayerProfile[];
 }
 
 
@@ -110,6 +123,7 @@ export interface IYoutubeVideosModel {
 export interface IYoutubeHttpResponse {
   id: string;
   message: string;
+  title: string;
   data: {
     nextPageToken: string;
     prevPageToken?: string;

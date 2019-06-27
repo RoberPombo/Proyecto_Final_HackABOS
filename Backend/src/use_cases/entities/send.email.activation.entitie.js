@@ -14,6 +14,11 @@ const {
 sendgridMail.setApiKey(apiKeySendgrid);
 
 
+/**
+ *
+ * @type {IsendEmailActivationEntitie}
+ *
+ */
 const sendEmailActivationEntitie = async(userEmail, activationCode, sport, language = 'en') => {
   const linkActivation = `${apiUrl}/user/activation?activation_code=${activationCode}&sport=${sport}`;
 

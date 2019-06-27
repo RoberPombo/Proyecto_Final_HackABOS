@@ -4,6 +4,8 @@ import { PlayersListComponent } from './players-list/players-list.component';
 import { CoreModule } from 'src/app/core/core.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { RouterModule, Routes } from '@angular/router';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 const routes: Routes = [
@@ -20,7 +22,9 @@ const routes: Routes = [
     CommonModule,
     CoreModule,
     LayoutModule,
+    MatTooltipModule,
     RouterModule.forChild(routes),
+    SharedModule,
   ]
 })
 export class PlayersModule { }

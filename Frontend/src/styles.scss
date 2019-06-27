@@ -1,15 +1,16 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 // Plus imports for other components in your app.
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&display=swap");
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-$custom-typography: mat-typography-config( $font-family: 'Roboto,Condensed',
-$headline: mat-typography-level(32px, 48px, 700),
-$body-1: mat-typography-level(16px, 24px, 400));
+$custom-typography: mat-typography-config(
+  $font-family: "Roboto,Condensed",
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 400)
+);
 @include mat-base-typography($custom-typography);
 @include mat-checkbox-typography($custom-typography);
 @include angular-material-typography($custom-typography);
@@ -31,7 +32,7 @@ $SportScoutApp-theme: mat-light-theme($SportScoutApp-primary, $SportScoutApp-acc
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($SportScoutApp-theme);
-$enable-responsive-font-sizes: true;
+
 /* You can add global styles to this file, and also import other style files */
 
 * {
@@ -42,15 +43,23 @@ $enable-responsive-font-sizes: true;
   body {
     height: 100vh;
     width: 100vw;
-    font-family: Roboto+Condensed;
+    font-family: Roboto + Condensed;
   }
 }
 
-.red-snackbar {
-  background: rgb(216, 5, 5);
-  color: white;
+html {
+  font-size: 16px;
+  background-color: rgb(236, 236, 236);
 }
-.green-snackbar {
-  background: rgb(65, 236, 31);
-  color: black;
+
+@media screen and (min-width: 320px) {
+  html {
+    font-size: calc(16px + 6 * ((100vw - 320px) / 680));
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  html {
+    font-size: 20px;
+  }
 }

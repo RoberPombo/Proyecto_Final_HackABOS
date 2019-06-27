@@ -1,0 +1,22 @@
+<section class="content" *ngIf="userData && userData.favoritePlayers && userData.favoritePlayers[0]">
+  <ng-container *ngFor="let player of userData.favoritePlayers">
+    <article class="card">
+      <header>
+        <h4>{{player.fullName | titlecase}}</h4>
+      </header>
+
+      <content>
+        <p><strong>{{ 'player.position' | translate}}</strong>
+          <ng-container *ngFor="let position of player.preferredPositions">
+            {{position | translate}}
+          </ng-container>
+        </p>
+      </content>
+
+      <footer>
+        <span [routerLink]="['/players', player.playerId]"><i class="material-icons">
+            folder_shared </i></span>
+      </footer>
+    </article>
+  </ng-container>
+</section>

@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutModule } from '@angular/cdk/layout';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatDatepickerModule, MatNativeDateModule, MatCardModule } from '@angular/material';
 
 
 const routes: Routes = [
@@ -21,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     CoreModule,
     LayoutModule,
+    MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
     RouterModule.forChild(routes),

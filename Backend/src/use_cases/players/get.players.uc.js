@@ -11,7 +11,7 @@ const { findPlayerRepositorie } = require('../../repositories/players/find.playe
 
 const getPlayersUseCase = async(role, sport, playerId, paramPlayerId) => {
   if (role !== 'team' && playerId !== paramPlayerId) {
-    throw CreateErrorResponseModel('Unauthorized user.', 'get.player.uc.js', {});
+    throw CreateErrorResponseModel('Forbidden access.', 'get.player.uc.js', {});
   }
 
   const requiredFields = ['_id'];

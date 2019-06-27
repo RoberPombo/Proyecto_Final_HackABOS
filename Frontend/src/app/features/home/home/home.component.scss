@@ -5,9 +5,11 @@
     grid-auto-columns: auto;
     min-height: 100vh;
     max-height: 100vh;
+    min-width: 100vw;
+    max-width: 100vw;
     main {
       overflow: auto;
-      padding: 1.5rem;
+      padding: 0.5rem;
     }
   }
 }

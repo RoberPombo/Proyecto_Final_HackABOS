@@ -14,8 +14,9 @@ import { CoreModule } from '../core/core.module';
 import { PasswordInputComponent } from './components/form-fields/password-input/password-input.component';
 import { PasswordMatchInputComponent } from './components/form-fields/password-match-input/password-match-input.component';
 import { AdaptiveFieldComponent } from './components/form-fields/adaptive-field/adaptive-field.component';
-import { SearchPipe } from './pipes/search.pipe';
+import { ShowAgePipe } from './pipes/show-age.pipe';
 import { AutocompleteFieldComponent } from './components/form-fields/autocomplete-field/autocomplete-field.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 
 const MaterialModules = [
@@ -34,7 +35,8 @@ const MaterialModules = [
     EmailInputComponent,
     PasswordInputComponent,
     PasswordMatchInputComponent,
-    SearchPipe,
+    ShowAgePipe,
+    FilterPipe,
   ],
   imports: [
     CommonModule,
@@ -51,6 +53,8 @@ const MaterialModules = [
     PasswordInputComponent,
     PasswordMatchInputComponent,
     ReactiveFormsModule,
+    ShowAgePipe,
+    FilterPipe,
   ]
 })
 export class SharedModule { }

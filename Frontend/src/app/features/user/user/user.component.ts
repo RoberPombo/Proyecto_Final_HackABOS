@@ -1,29 +1,39 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/core/services/user.service';
 import { IUserProfile } from 'src/app/core/core.models';
-import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { PlayerService } from 'src/app/core/services/player.service';
 import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { AuthService } from 'src/app/core/services/auth.service';
+
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss']
 })
-export class UserProfileComponent implements OnInit {
+export class UserComponent implements OnInit {
 
   @Input() public userForm: FormGroup;
 
   userData: IUserProfile;
+  showComponent: string;
 
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private fb: FormBuilder,
-    private snackServ: SnackbarService,
     private playerServ: PlayerService,
     private router: Router,
+    private snackServ: SnackbarService,
+    private translate: TranslateService,
     public userServ: UserService,
-  ) { }
+    private authServ: AuthService,
+  ) {
+    this.calcView();
+  }
 
   ngOnInit() {
     this.userServ.getUserProfile().subscribe(
@@ -34,13 +44,20 @@ export class UserProfileComponent implements OnInit {
         }
       },
     );
-
     this.userForm = this.fb.group({});
   }
 
-
-  addVideosPlayer() {
-    this.router.navigate([`/players/${this.userServ.userProfile.agentOf.playerId}/youtube`]);
+  calcView() {
+    this.breakpointObserver.observe(['(min-width: 800px)', '(min-width: 1200px)'])
+      .subscribe((state: BreakpointState) => {
+        if (state.breakpoints['(min-width: 800px)'] === true && state.breakpoints['(min-width: 1200px)'] === false) {
+          this.showComponent = 'config-profile'
+        } else if (state.breakpoints['(min-width: 1200px)'] === true) {
+          this.showComponent = 'all'
+        } else {
+          this.showComponent = 'config'
+        }
+      })
   }
 
 
@@ -52,22 +69,22 @@ export class UserProfileComponent implements OnInit {
   becomeTeam() {
     this.userServ.updateProfile({
       email: this.userData.email,
-      role: 'team'
+      role: 'team',
     }).subscribe();
     this.userData = undefined;
-    this.userServ.getUserProfile().subscribe(
-      res => {
-        this.userData = res.data;
-        this.snackServ.openSnackbar('Ya puede buscar promesas', 'green-snackbar', 2);
-      },
-    );
+    this.authServ.refreshToken().subscribe(() => {
+      this.userServ.getUserProfile().subscribe(
+        res => {
+          this.userData = res.data;
+          this.snackServ.show(res.message, 'success');
+        },
+      );
+    });
   }
 
 
-  goPlayerProfile() {
-    console.log(this.userData.agentOf);
-    console.log(this.playerServ.playerProfile);
-    this.router.navigate([`/players/${this.userData.agentOf.playerId}`]);
+  changeShowComponent(nameComp: string) {
+    this.showComponent = nameComp;
   }
 
 
@@ -78,10 +95,8 @@ export class UserProfileComponent implements OnInit {
         return c;
       }, {}));
 
+      this.translate.use(formValues.language);
       this.userServ.updateProfile({
-        _id: this.userData._id,
-        email: this.userData.email,
-        role: this.userData.role,
         language: formValues.language,
         profile: {
           fullName: formValues.fullName,
@@ -98,7 +113,7 @@ export class UserProfileComponent implements OnInit {
           other: formValues.other,
         }
       }).subscribe(
-        (res) => this.snackServ.openSnackbar(res.message, 'green-snackbar', 3),
+        (res) => this.snackServ.show(res.title, 'success'),
       );
     }
   }
