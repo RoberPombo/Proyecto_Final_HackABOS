@@ -1,26 +1,19 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceFolder}/index.js"
-    },
-    {
-      "type": "node",
-      "name": "vscode-jest-tests",
-      "request": "launch",
+      "name": "Debug File Test",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
       "args": [
-        "--runInBand"
+        "${relativeFile}",
+        "--runInBand",
+        "--forceExit"
       ],
-      "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+      "disableOptimisticBPs": true
     }
   ]
 }
