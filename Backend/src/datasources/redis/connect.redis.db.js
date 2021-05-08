@@ -1,14 +1,14 @@
 'use strict';
 
 // Imports modules npm. ============================================================================
-const asyncRedis = require('async-redis');
+const redis = require('redis');
 // Declared environment variables ==================================================================
 const {
   REDISCLOUD_URL: redisCloudUrl,
 } = process.env;
 
 
-const asyncRedisClient = asyncRedis.createClient(redisCloudUrl, { no_ready_check: true });
+const asyncRedisClient = redis.createClient(redisCloudUrl, { no_ready_check: true });
 
 
 asyncRedisClient.on('error', (err) => {
